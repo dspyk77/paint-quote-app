@@ -171,6 +171,7 @@
           // Other objects
     
   // when "start" button is clicked
+    // display "next" button on the bottom of this container 
     // for each wall selected
       // if windows is checked
         // display windows section w/ inputs fields, "add window group" button
@@ -347,16 +348,7 @@
         // get total rate charged for cabinets (totalBaseRate + totalCabinetDoorsRate + totalCabinetDrawrsRate)
         // store value in cabinetPrice
         // post input values var's to backend in object
-
-        // pop up module 
-          // do you need to add another cabinet? w/ "add new cabinet" and "move on" button
-            // if "add new cabinet" button is clicked
-              // clear input fields
-              // repeat actions when "add cabinet" button is clicked
-            // if "move on" button is clicked
-              // get total price for all cabinet's added (newCabinet.cabinetPrice[0] + newCabinet.cabinetPrice[1] + newCabinet.cabinetPrice[2]) ext.
-              // store value in totalcabinetPrice
-              // hide cabinet section
+        // hide cabinet section
 
   // if furniture is checked 
     // display furniture section with furniture name, number of same size items (chairs, bedframes ext), flat rate per item and "add furniture" button
@@ -390,4 +382,48 @@
             // if "move on" button is clicked
               // get total price for all cabinet's added (newCabinet.cabinetPrice[0] + newCabinet.cabinetPrice[1] + newCabinet.cabinetPrice[2]) ext.
               // store value in totalcabinetPrice
-              // hide furnitur section
+              // hide furniture section
+
+// when the "next" button is clicked 
+  // display new room section with "yes" and "no" buttons
+    // if the "yes" button os clicked 
+      // repeat above section
+      // hide new room section
+    // if the "no" button is clicked
+      // add together all applicable rooms, cabinets and furniture total price 
+      // store in grandTotal
+      // display itemized estimate section with "complete estimate" and "edit" buttons
+        // stucture tables by room
+          // room name
+            // walls - rate per sqft
+              // wall one - wall one sqft before subractions - wall one sqft after subractions - wall one price
+              // continue for all applicable walls
+              // total price for wall(s)
+            // ceiling - rate per sqft
+              //  ceiling sqft - ceiling price
+            // cabinet - flat rate for base(s) - flat rate for doors - flat rate for drawrs
+              // number of base(s) - price for bases
+              // number of doors - price for doors
+              // number of drawrs - price for drawrs 
+              // total price for cabinet(s)
+            // furniture 
+              // furniture name - price per item
+              // number of items - price for items
+              // continue for applicable furniture items
+              // total furniture price
+          // new table for applicable rooms
+            // grand total
+        // when "edit" button is clicked 
+          // display all sections used 
+        // when "complete estimate" button is clicked 
+          // update any input values changed
+          // pop up module asking how user want to save the estimate with "save to computer" and "email me" button
+            // when "save to computer" button is clicked 
+              // save to user device
+                // google how to do this - stackOverflow
+            // when "email me" button is clicked 
+              // email to user email
+                // google how to do this - stackOverflow
+            
+
+
