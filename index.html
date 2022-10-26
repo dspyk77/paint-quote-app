@@ -31,7 +31,7 @@
       </ul>
     </header>
   
-    <main>
+    <main class="container">
 
       <section>
         <div class="p-5 mb-4 bg-light rounded-3">
@@ -44,53 +44,91 @@
       </section>
 
       <section class="p-5 mb-4 bg-light rounded-3">
-        <h3>Kitchen</h3>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Item-Object</th>
-              <th scope="col">Sqft</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Wall One</td>
-              <td>+ 288</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Window</td>
-              <td>- 12</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Door</td>
-              <td>- 21</td>
-            </tr>
-            <tr>
-              <th scope="row">4</th>
-              <td>Wall Two</td>
-              <td>+ 288</td>
-            </tr>
-            <tr>
-              <th scope="row">5</th>
-              <td>Window</td>
-              <td>- 12</td>
-            </tr>
-            <tr>
-              <th scope="row">6</th>
-              <td>Door</td>
-              <td>- 21</td>
-            </tr>
-            <tr>
-              <th scope="row"></th>
-              <th>Total Sqft:</th>
-              <th>510</th>
-            </tr>
-        </table>
-
+        <div class="row">
+        <div class="pb-4 col-6">
+          <div>
+            <span>Room Name:</span>
+          </div>
+          <div>
+            <input type="text">
+            <button type="submit">Add Room</button>
+          </div>
+          <div>
+            <span>Object Name:</span>
+          </div>
+          <div>
+            <input type="text">
+            <button type="submit">Add Object</button>
+          </div>
+          <div>
+            <span>Object Length:</span>
+          </div>
+          <div>
+            <input type="text">
+          </div>
+          <div>
+            <span>Object Height:</span>
+          </div>
+          <div>
+            <input type="text">
+            <button type="submit">Add Sqft</button>
+            <button type="submit">Subtract Sqft</button>
+          </div>
+        </div>
+        <div class="col-6">
+          <span>Remove Object</span>
+          <input type="number" name="" id="">
+          <button type="reset">Remove</button>
+        </div>
+      </div>
+        <div>
+          <h3>Kitchen</h3>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Item-Object</th>
+                <th scope="col">Sqft</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Wall One</td>
+                <td>+ 288</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Window</td>
+                <td>- 12</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>Door</td>
+                <td>- 21</td>
+              </tr>
+              <tr>
+                <th scope="row">4</th>
+                <td>Wall Two</td>
+                <td>+ 288</td>
+              </tr>
+              <tr>
+                <th scope="row">5</th>
+                <td>Window</td>
+                <td>- 12</td>
+              </tr>
+              <tr>
+                <th scope="row">6</th>
+                <td>Door</td>
+                <td>- 21</td>
+              </tr>
+              <tr>
+                <th scope="row"></th>
+                <th>Total Sqft:</th>
+                <th>510</th>
+              </tr>
+          </table>
+       </div>
       </section>
     </main>
 
