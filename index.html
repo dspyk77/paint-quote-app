@@ -44,45 +44,52 @@
       </section>
 
       <section class="p-5 mb-4 bg-light rounded-3">
-        <div class="row">
-        <div class="pb-4 col-6">
+        
+        <div class="pb-4">
           <div>
             <span>Room Name:</span>
           </div>
           <div>
             <input type="text">
-            <button type="submit">Add Room</button>
-          </div>
-          <div>
-            <span>Object Name:</span>
-          </div>
-          <div>
-            <input type="text">
-            <button type="submit">Add Object</button>
-          </div>
-          <div>
-            <span>Object Length:</span>
-          </div>
-          <div>
-            <input type="text">
-          </div>
-          <div>
-            <span>Object Height:</span>
-          </div>
-          <div>
-            <input type="text">
-            <button type="submit">Add Sqft</button>
-            <button type="submit">Subtract Sqft</button>
+            <button class="btn btn-primary btn-sm">Add Room</button>
+            <button class="btn btn-primary btn-sm">Subtract Room</button>
           </div>
         </div>
-        <div class="col-6">
-          <span>Remove Object</span>
-          <input type="number" name="" id="">
-          <button type="reset">Remove</button>
-        </div>
-      </div>
+
         <div>
           <h3>Kitchen</h3>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col"><label for="objectName">New Object Name</label></th>
+                <th scope="col"><label for="objectLenght">Object Length</label></th>
+                <th scope="col"><label for="objectHeight">Object Height</label></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="text" name="objectName"></td>
+                <td><input type="number" name="objectLenght"></td>
+                <td><input type="number" name="objectHeight"></td>
+              </tr>
+              <tr>
+                <td><button class="btn btn-primary me-2">Add Sqft</button><button class="btn btn-primary">Subtract Sqft</button></td>
+              </tr>
+              <tr>
+                <th scope="col"><label for="removeObject">Remove Object</label></th>
+              </tr>
+              <tr>
+                <td><input type="number" name="removeObject"></td>
+              </tr>
+              <tr>
+                <td><button class="btn btn-primary">Remove Object</button></td>
+              </tr>
+              <tr>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+
           <table class="table">
             <thead>
               <tr>
@@ -129,6 +136,87 @@
               </tr>
           </table>
        </div>
+
+       <div>
+        <h3>Master</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col"><label for="objectName">New Object Name</label></th>
+              <th scope="col"><label for="objectLenght">Object Length</label></th>
+              <th scope="col"><label for="objectHeight">Object Height</label></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="text" name="objectName"></td>
+              <td><input type="number" name="objectLenght"></td>
+              <td><input type="number" name="objectHeight"></td>
+            </tr>
+            <tr>
+              <td><button class="btn btn-primary me-2">Add Sqft</button><button class="btn btn-primary">Subtract Sqft</button></td>
+            </tr>
+            <tr>
+              <th scope="col"><label for="removeObject">Remove Object</label></th>
+            </tr>
+            <tr>
+              <td><input type="number" name="removeObject"></td>
+            </tr>
+            <tr>
+              <td><button class="btn btn-primary">Remove Object</button></td>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Item-Object</th>
+              <th scope="col">Sqft</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Wall One</td>
+              <td>+ 288</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Window</td>
+              <td>- 12</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>Door</td>
+              <td>- 21</td>
+            </tr>
+            <tr>
+              <th scope="row">4</th>
+              <td>Wall Two</td>
+              <td>+ 288</td>
+            </tr>
+            <tr>
+              <th scope="row">5</th>
+              <td>Window</td>
+              <td>- 12</td>
+            </tr>
+            <tr>
+              <th scope="row">6</th>
+              <td>Door</td>
+              <td>- 21</td>
+            </tr>
+            <tr>
+              <th scope="row"></th>
+              <th>Total Sqft:</th>
+              <th>510</th>
+            </tr>
+        </table>
+     </div>
       </section>
     </main>
 
