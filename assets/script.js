@@ -143,6 +143,13 @@ function renderRooms() {
 renderRooms()
 
 function addRoom() {
-  console.log(roomNameInput.value)
+  room = {
+    name: roomNameInput.value,
+    items: []
+  }
+
+  rooms.push(room)
+
+  renderRooms()
 }
 
