@@ -63,6 +63,7 @@ var rooms = [
 
 var roomsDiv = document.querySelector("#rooms-div")
 var roomNameInput = document.querySelector("#room-name-input")
+var deleteRoomIndex = document.querySelector("#remove-room-input")
 
 function renderRooms() {
   const room = rooms[0]
@@ -140,8 +141,6 @@ function renderRooms() {
   }
 }
 
-renderRooms()
-
 function addRoom() {
   room = {
     name: roomNameInput.value,
@@ -149,6 +148,12 @@ function addRoom() {
   }
 
   rooms.push(room)
+
+  renderRooms()
+}
+
+function removeRoom() {
+  rooms.splice(deleteRoomIndex.value, 1)
 
   renderRooms()
 }
