@@ -642,3 +642,44 @@ static HTML UI/UX demo
       </section>
       ----------------------
 =================================================================
+
+// {
+  //   name: "Master",
+  //   items: [
+  //     {
+  //       name: "Wall One",
+  //       width: 24,
+  //       height: 12
+  //     },
+  //     {
+  //       name: "Window",
+  //       width: 2,
+  //       height: 3
+  //     },
+  //     {
+  //       name: "Door",
+  //       width: 3,
+  //       height: 7
+  //     }
+  //   ]
+  // },
+  // {
+  //   name: "Bathroom",
+  //   items: [
+  //     {
+  //       name: "Wall One",
+  //       width: 24,
+  //       height: 12
+  //     },
+  //     {
+  //       name: "Window",
+  //       width: 2,
+  //       height: 3
+  //     },
+  //     {
+  //       name: "Door",
+  //       width: 3,
+  //       height: 7
+  //     }
+  //   ]
+  // }

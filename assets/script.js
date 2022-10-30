@@ -2,52 +2,13 @@ var rooms = [
   {
     name: "Kitchen",
     items: []
-  },
-  {
-    name: "Master",
-    items: [
-      {
-        name: "Wall One",
-        width: 24,
-        height: 12
-      },
-      {
-        name: "Window",
-        width: 2,
-        height: 3
-      },
-      {
-        name: "Door",
-        width: 3,
-        height: 7
-      }
-    ]
-  },
-  {
-    name: "Bathroom",
-    items: [
-      {
-        name: "Wall One",
-        width: 24,
-        height: 12
-      },
-      {
-        name: "Window",
-        width: 2,
-        height: 3
-      },
-      {
-        name: "Door",
-        width: 3,
-        height: 7
-      }
-    ]
   }
 ]
 
 var roomsDiv = document.querySelector("#rooms-div")
 var roomNameInput = document.querySelector("#room-name-input")
 var deleteRoomIndex = document.querySelector("#remove-room-input")
+var roomSqft = 0
 
 function renderRooms(itemSqft) {
   roomsDiv.innerHTML = ""
@@ -58,7 +19,7 @@ function renderRooms(itemSqft) {
     let rows = "";
     for (let j = 0; j < room.items.length; j++) {
       const item = room.items[j];
-      // var itemSqft = (item.width * item.height)
+      var itemSqft = (item.width * item.height)
 
       const row = `
       <tr>
@@ -119,7 +80,7 @@ function renderRooms(itemSqft) {
           <tr>
             <th scope="row"></th>
             <th>Total Sqft:</th>
-            <th>510</th>
+            <th>${roomSqft}</th>
           </tr>
         </tbody>
       </table>
@@ -148,48 +109,55 @@ function removeRoom() {
   renderRooms()
 }
 
-function addItemSqft(roomIndex) {
-  var addItemName = document.querySelector(`#new-item-name-input-room-${roomIndex}`)
-  var addItemHeight = document.querySelector(`#new-item-height-input-room-${roomIndex}`)
-  var addItemWidth = document.querySelector(`#new-item-width-input-room-${roomIndex}`)
+function addItemSqft(roomIndex, itemSqft) {
+  var newItemName = document.querySelector(`#new-item-name-input-room-${roomIndex}`)
+  var newItemHeight = document.querySelector(`#new-item-height-input-room-${roomIndex}`)
+  var newItemWidth = document.querySelector(`#new-item-width-input-room-${roomIndex}`)
 
-  console.log(addItemName.value)
-  console.log(addItemHeight.value)
-  console.log(addItemWidth.value)
+  console.log(newItemName.value)
+  console.log(newItemHeight.value)
+  console.log(newItemWidth.value)
 
   item = {
-    name: addItemName.value,
-    width: addItemWidth.value,
-    height: addItemHeight.value
+    name: newItemName.value,
+    width: newItemWidth.value,
+    height: newItemHeight.value
   }
-
-  console.log(item)
 
   rooms[roomIndex].items.push(item)
 
-  renderRooms()
+  itemSqft = (item.width * item.height)
+  roomSqft = (roomSqft + itemSqft)
+
+  console.log(itemSqft)
+  console.log(roomSqft)
+
+  renderRooms(itemSqft)
 }
 
-function subItemSqft(roomIndex) {
-  var addItemName = document.querySelector(`#new-item-name-input-room-${roomIndex}`)
-  var addItemHeight = document.querySelector(`#new-item-height-input-room-${roomIndex}`)
-  var addItemWidth = document.querySelector(`#new-item-width-input-room-${roomIndex}`)
+function subItemSqft(roomIndex, itemSqft) {
+  var newItemName = document.querySelector(`#new-item-name-input-room-${roomIndex}`)
+  var newItemHeight = document.querySelector(`#new-item-height-input-room-${roomIndex}`)
+  var newItemWidth = document.querySelector(`#new-item-width-input-room-${roomIndex}`)
 
-  console.log(addItemName.value)
-  console.log(addItemHeight.value)
-  console.log(addItemWidth.value)
+  console.log(newItemName.value)
+  console.log(newItemHeight.value)
+  console.log(newItemWidth.value)
 
   item = {
-    name: addItemName.value,
-    width: addItemWidth.value,
-    height: addItemHeight.value
+    name: newItemName.value,
+    width: newItemWidth.value,
+    height: newItemHeight.value
   }
 
   console.log(item)
 
   rooms[roomIndex].items.push(item)
 
-  renderRooms()
+  itemSqft = (item.width * item.height)
+  roomSqft = (roomSqft - itemSqft)
+
+  renderRooms(itemSqft)
 }
 
 function removeItem(roomIndex) {
