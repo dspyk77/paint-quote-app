@@ -37,6 +37,7 @@ function renderRooms(itemSqft) {
     roomsDiv.insertAdjacentHTML('beforeend', `
       <h3>${room.name}</h3>
       <p>Room # ${i +1}</p>
+      <button onclick="removeRoom(${i})" class="btn btn-primary btn-sm">Remove Room</button>
 
       <table class="table">
         <thead>
@@ -103,8 +104,8 @@ function addRoom() {
 // room so no input is needed
 // <button onclick="removeRoom()" class="btn btn-primary btn-sm">Remove Room</button>
 
-function removeRoom() {
-  rooms.splice(deleteRoomIndex.value, 1)
+function removeRoom(roomIndex) {
+  rooms.splice(roomIndex, 1)
 
   renderRooms()
 }
@@ -113,10 +114,6 @@ function addItemSqft(roomIndex, itemSqft) {
   var newItemName = document.querySelector(`#new-item-name-input-room-${roomIndex}`)
   var newItemHeight = document.querySelector(`#new-item-height-input-room-${roomIndex}`)
   var newItemWidth = document.querySelector(`#new-item-width-input-room-${roomIndex}`)
-
-  console.log(newItemName.value)
-  console.log(newItemHeight.value)
-  console.log(newItemWidth.value)
 
   item = {
     name: newItemName.value,
@@ -129,9 +126,6 @@ function addItemSqft(roomIndex, itemSqft) {
   itemSqft = (item.width * item.height)
   roomSqft = (roomSqft + itemSqft)
 
-  console.log(itemSqft)
-  console.log(roomSqft)
-
   renderRooms(itemSqft)
 }
 
@@ -140,17 +134,11 @@ function subItemSqft(roomIndex, itemSqft) {
   var newItemHeight = document.querySelector(`#new-item-height-input-room-${roomIndex}`)
   var newItemWidth = document.querySelector(`#new-item-width-input-room-${roomIndex}`)
 
-  console.log(newItemName.value)
-  console.log(newItemHeight.value)
-  console.log(newItemWidth.value)
-
   item = {
     name: newItemName.value,
     width: newItemWidth.value,
     height: newItemHeight.value
   }
-
-  console.log(item)
 
   rooms[roomIndex].items.push(item)
 
