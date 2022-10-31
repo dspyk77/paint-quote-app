@@ -4,7 +4,7 @@ var rooms = [
     items: []
   }
 ]
-
+ 
 var roomsDiv = document.querySelector("#rooms-div")
 var roomNameInput = document.querySelector("#room-name-input")
 var deleteRoomIndex = document.querySelector("#remove-room-input")
