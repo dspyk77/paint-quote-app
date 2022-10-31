@@ -1,7 +1,43 @@
 var rooms = [
   {
     name: "Kitchen",
-    items: []
+    items: [
+      {
+        name: "Wall One",
+        width: 24,
+        height: 12
+      },
+      {
+        name: "Window",
+        width: 2,
+        height: 3
+      },
+      {
+        name: "Door",
+        width: 3,
+        height: 7
+      }
+    ]
+  },
+  {
+    name: "Master",
+    items: [
+      {
+        name: "Wall One",
+        width: 24,
+        height: 12
+      },
+      {
+        name: "Window",
+        width: 2,
+        height: 3
+      },
+      {
+        name: "Door",
+        width: 3,
+        height: 7
+      }
+    ]
   }
 ]
 
@@ -23,7 +59,7 @@ function renderRooms(itemSqft) {
 
       const row = `
       <tr>
-        <th scope="row">${j + 1}</th>
+        <th scope="row">${j + 1}<button onclick="removeItem(${i}, ${j})" class="btn btn-outline-danger btn-sm ms-4">Delete</button></th>
         <td>${item.name}</td>
         <td>${item.width}</td>
         <td>${item.height}</td>
@@ -59,9 +95,6 @@ function renderRooms(itemSqft) {
           </tr>
           <tr>
             <th scope="col"><label for="removeObject">Remove Item-Object</label></th>
-          </tr>
-          <tr>
-            <td><input type="number" name="removeItem" id="remove-item-input-room-${i}" class="me-2"><button onclick="removeItem(${i})" class="btn btn-primary">Remove</button></td>
           </tr>
         </tbody>
       </table>
@@ -151,12 +184,22 @@ function subItemSqft(roomIndex, itemSqft) {
   renderRooms(itemSqft, addSubItem)
 }
 
-function removeItem(roomIndex) {
-  var itemDel = document.querySelector(`#remove-item-input-room-${roomIndex}`)
+function removeItem(roomIndex, itemIndex) {
 
-  rooms[roomIndex].items.splice(itemDel.value, 1)
+  console.log(roomIndex)
+  console.log(itemIndex)
 
-  renderRooms()
+  console.log("Before:")
+  console.log(rooms[roomIndex])
+  console.log(rooms[roomIndex].items[itemIndex])
+
+  rooms[roomIndex].items.splice(itemIndex, 1)
+
+  console.log("After:")
+  console.log(rooms[roomIndex])
+  console.log(rooms[roomIndex].items[itemIndex])
+
+  renderRooms(roomIndex)
 }
 
 renderRooms()

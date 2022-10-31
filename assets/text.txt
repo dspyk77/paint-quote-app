@@ -643,43 +643,56 @@ static HTML UI/UX demo
       ----------------------
 =================================================================
 
-// {
-  //   name: "Master",
-  //   items: [
-  //     {
-  //       name: "Wall One",
-  //       width: 24,
-  //       height: 12
-  //     },
-  //     {
-  //       name: "Window",
-  //       width: 2,
-  //       height: 3
-  //     },
-  //     {
-  //       name: "Door",
-  //       width: 3,
-  //       height: 7
-  //     }
-  //   ]
-  // },
-  // {
-  //   name: "Bathroom",
-  //   items: [
-  //     {
-  //       name: "Wall One",
-  //       width: 24,
-  //       height: 12
-  //     },
-  //     {
-  //       name: "Window",
-  //       width: 2,
-  //       height: 3
-  //     },
-  //     {
-  //       name: "Door",
-  //       width: 3,
-  //       height: 7
-  //     }
-  //   ]
-  // }
+ {
+     name: "Master",
+     items: [
+       {
+         name: "Wall One",
+         width: 24,
+         height: 12
+       },
+       {
+         name: "Window",
+         width: 2,
+         height: 3
+       },
+       {
+         name: "Door",
+         width: 3,
+         height: 7
+       }
+     ]
+   },
+   {
+     name: "Bathroom",
+     items: [
+       {
+         name: "Wall One",
+         width: 24,
+         height: 12
+       },
+       {
+        name: "Window",
+         width: 2,
+         height: 3
+       },
+       {
+         name: "Door",
+         width: 3,
+         height: 7
+       }
+     ]
+   }
+
+
+<tr>
+  <td><input type="number" name="removeItem" id="remove-item-input-room-${i}" class="me-2"><button onclick="removeItem(${i})" class="btn btn-primary">Remove</button></td>
+</tr>
+
+function removeItem(roomIndex) {
+  var itemDel = document.querySelector(`#remove-item-input-room-${roomIndex}`)
+
+  rooms[roomIndex].items.splice(itemDel.value, 1)
+
+  renderRooms()
+}
