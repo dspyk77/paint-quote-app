@@ -27,7 +27,7 @@ function renderRooms(itemSqft) {
         <td>${item.name}</td>
         <td>${item.width}</td>
         <td>${item.height}</td>
-        <td>${itemSqft}</td>
+        <td id="add-sub-item-room-${i}">${itemSqft}</td>
       </tr>
       `;
 
@@ -114,6 +114,7 @@ function addItemSqft(roomIndex, itemSqft) {
   var newItemName = document.querySelector(`#new-item-name-input-room-${roomIndex}`)
   var newItemHeight = document.querySelector(`#new-item-height-input-room-${roomIndex}`)
   var newItemWidth = document.querySelector(`#new-item-width-input-room-${roomIndex}`)
+  var addSubItem = document.querySelector(`#add-sub-item-room-${roomIndex}`)
 
   item = {
     name: newItemName.value,
@@ -123,16 +124,18 @@ function addItemSqft(roomIndex, itemSqft) {
 
   rooms[roomIndex].items.push(item)
 
+
   itemSqft = (item.width * item.height)
   roomSqft = (roomSqft + itemSqft)
 
-  renderRooms(itemSqft)
+  renderRooms(itemSqft, addSubItem)
 }
 
 function subItemSqft(roomIndex, itemSqft) {
   var newItemName = document.querySelector(`#new-item-name-input-room-${roomIndex}`)
   var newItemHeight = document.querySelector(`#new-item-height-input-room-${roomIndex}`)
   var newItemWidth = document.querySelector(`#new-item-width-input-room-${roomIndex}`)
+  var addSubItem = document.querySelector(`#add-sub-item-room-${roomIndex}`)
 
   item = {
     name: newItemName.value,
@@ -145,7 +148,7 @@ function subItemSqft(roomIndex, itemSqft) {
   itemSqft = (item.width * item.height)
   roomSqft = (roomSqft - itemSqft)
 
-  renderRooms(itemSqft)
+  renderRooms(itemSqft, addSubItem)
 }
 
 function removeItem(roomIndex) {
