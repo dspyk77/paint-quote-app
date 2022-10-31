@@ -1,43 +1,7 @@
 var rooms = [
   {
-    name: "Kitchen",
-    items: [
-      {
-        name: "Wall One",
-        width: 24,
-        height: 12
-      },
-      {
-        name: "Window",
-        width: 2,
-        height: 3
-      },
-      {
-        name: "Door",
-        width: 3,
-        height: 7
-      }
-    ]
-  },
-  {
-    name: "Master",
-    items: [
-      {
-        name: "Wall One",
-        width: 24,
-        height: 12
-      },
-      {
-        name: "Window",
-        width: 2,
-        height: 3
-      },
-      {
-        name: "Door",
-        width: 3,
-        height: 7
-      }
-    ]
+    name: "",
+    items: []
   }
 ]
 
@@ -73,7 +37,7 @@ function renderRooms(itemSqft) {
     roomsDiv.insertAdjacentHTML('beforeend', `
       <h3>${room.name}</h3>
       <p>Room # ${i +1}</p>
-      <button onclick="removeRoom(${i})" class="btn btn-primary btn-sm">Remove Room</button>
+      <button onclick="removeRoom(${i})" class="btn btn-outline-danger btn-sm">Remove Room</button>
 
       <table class="table">
         <thead>
@@ -129,6 +93,10 @@ function addRoom() {
   }
 
   rooms.push(room)
+
+  if (rooms[0].name === "") {
+    rooms.splice(0, 1)
+  }
 
   renderRooms()
 }
@@ -202,4 +170,3 @@ function removeItem(roomIndex, itemIndex) {
   renderRooms(roomIndex)
 }
 
-renderRooms()
