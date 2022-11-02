@@ -23,11 +23,12 @@ function renderRooms(itemSqft) {
 
       const row = `
       <tr>
-        <th scope="row">${j + 1}<button onclick="removeItem(${i}, ${j})" class="btn btn-outline-danger btn-sm ms-4">Delete</button></th>
+        <th scope="row">${j + 1}</th>
         <td>${item.name}</td>
         <td>${item.width}</td>
         <td>${item.height}</td>
         <td id="add-sub-item-room-${i}">${itemSqft}</td>
+        <td><button onclick="removeItem(${i}, ${j})" class="btn btn-outline-danger btn-sm ms-4">Delete</button></td>
       </tr>
       `;
 
@@ -49,16 +50,13 @@ function renderRooms(itemSqft) {
         </thead>
         <tbody>
           <tr>
-            <td><input type="text" id="new-item-name-input-room-${i}" name="objectName"></td>
-            <td><input type="number" id="new-item-width-input-room-${i}" name="objectWidth"></td>
-            <td><input type="number" id="new-item-height-input-room-${i}" name="objectHeight"></td>
+            <td><input type="text" class="col-8" id="new-item-name-input-room-${i}" name="objectName"></td>
+            <td><input type="number" class="col-8" id="new-item-width-input-room-${i}" name="objectWidth"></td>
+            <td><input type="number" class="col-8" id="new-item-height-input-room-${i}" name="objectHeight"></td>
           </tr>
           <tr>
-            <td><button onclick="addItemSqft(${i})" class="btn btn-primary me-2">Add Sqft</button><button onclick="subItemSqft(${i})" class="btn btn-primary">Subtract
+            <td><button onclick="addItemSqft(${i})" class="btn btn-primary m-2">Add Sqft</button><button onclick="subItemSqft(${i})" class="btn btn-primary m-2">Subtract
                 Sqft</button></td>
-          </tr>
-          <tr>
-            <th scope="col"><label for="removeObject">Remove Item-Object</label></th>
           </tr>
         </tbody>
       </table>
@@ -69,7 +67,7 @@ function renderRooms(itemSqft) {
             <th scope="col">Item-Object</th>
             <th scope="col">Width</th>
             <th scope="col">Height</th>
-            <th scope="col">Sqft</th>
+            <th scope="col" colspan="2">Sqft</th>
           </tr>
         </thead>
 
@@ -78,7 +76,7 @@ function renderRooms(itemSqft) {
           <tr>
             <th scope="row"></th>
             <th>Total Sqft:</th>
-            <th>${roomSqft}</th>
+            <th colspan="4">${roomSqft}</th>
           </tr>
         </tbody>
       </table>
@@ -97,6 +95,8 @@ function addRoom() {
   if (rooms[0].name === "") {
     rooms.splice(0, 1)
   }
+
+  roomNameInput.value = ""
 
   renderRooms()
 }
@@ -153,20 +153,11 @@ function subItemSqft(roomIndex, itemSqft) {
 }
 
 function removeItem(roomIndex, itemIndex) {
-
-  console.log(roomIndex)
-  console.log(itemIndex)
-
-  console.log("Before:")
-  console.log(rooms[roomIndex])
-  console.log(rooms[roomIndex].items[itemIndex])
+  var removeItemSqft = (rooms[roomIndex].items[itemIndex].width * rooms[roomIndex].items[itemIndex].height)
+  roomSqft = (roomSqft - removeItemSqft)
 
   rooms[roomIndex].items.splice(itemIndex, 1)
 
-  console.log("After:")
-  console.log(rooms[roomIndex])
-  console.log(rooms[roomIndex].items[itemIndex])
-
-  renderRooms(roomIndex)
+  renderRooms()
 }
 
