@@ -28,7 +28,7 @@ function renderRooms(itemSqft) {
         <td>${item.name}</td>
         <td>${item.width}</td>
         <td>${item.height}</td>
-        <td id="add-sub-item-room-${i}">${item.posOrNeg} ${itemSqft}</td>
+        <td id="add-sub-item-room-${i}">${item.posOrNeg}${itemSqft}</td>
         <td><button onclick="removeItem(${i}, ${j})" class="btn btn-outline-danger btn-sm ms-4">Delete</button></td>
       </tr>
       `;
@@ -157,7 +157,13 @@ function subItemSqft(roomIndex, itemSqft) {
 
 function removeItem(roomIndex, itemIndex) {
   var removeItemSqft = (rooms[roomIndex].items[itemIndex].width * rooms[roomIndex].items[itemIndex].height)
-  roomSqft = (roomSqft - removeItemSqft)
+  
+  if (rooms[roomIndex].items[itemIndex].posOrNeg == "+") {
+    roomSqft = (roomSqft - removeItemSqft)
+  } else if (rooms[roomIndex].items[itemIndex].posOrNeg == "-") {
+    roomSqft = (roomSqft + removeItemSqft)
+  }
+  
 
   rooms[roomIndex].items.splice(itemIndex, 1)
 
