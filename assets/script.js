@@ -9,6 +9,7 @@ var roomsDiv = document.querySelector("#rooms-div")
 var roomNameInput = document.querySelector("#room-name-input")
 var deleteRoomIndex = document.querySelector("#remove-room-input")
 var roomSqft = 0
+var plusMinus = ""
 
 function renderRooms(itemSqft) {
   roomsDiv.innerHTML = ""
@@ -27,7 +28,7 @@ function renderRooms(itemSqft) {
         <td>${item.name}</td>
         <td>${item.width}</td>
         <td>${item.height}</td>
-        <td id="add-sub-item-room-${i}">${itemSqft}</td>
+        <td id="add-sub-item-room-${i}">${item.posOrNeg} ${itemSqft}</td>
         <td><button onclick="removeItem(${i}, ${j})" class="btn btn-outline-danger btn-sm ms-4">Delete</button></td>
       </tr>
       `;
@@ -120,7 +121,8 @@ function addItemSqft(roomIndex, itemSqft) {
   item = {
     name: newItemName.value,
     width: newItemWidth.value,
-    height: newItemHeight.value
+    height: newItemHeight.value,
+    posOrNeg: "+"
   }
 
   rooms[roomIndex].items.push(item)
@@ -141,7 +143,8 @@ function subItemSqft(roomIndex, itemSqft) {
   item = {
     name: newItemName.value,
     width: newItemWidth.value,
-    height: newItemHeight.value
+    height: newItemHeight.value,
+    posOrNeg: "-"
   }
 
   rooms[roomIndex].items.push(item)
