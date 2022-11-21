@@ -9,14 +9,26 @@ var rooms = [
 var roomsDiv = document.querySelector("#rooms-div");
 var roomNameInput = document.querySelector("#room-name-input");
 var deleteRoomIndex = document.querySelector("#remove-room-input");
+let displayEstimateTotal = document.querySelector("#esitmate-totals")
 
 function renderRooms() {
   roomsDiv.innerHTML = "";
 
+  let totalEstimateRows = "";
   for (let i = 0; i < rooms.length; i++) {
     const room = rooms[i];
     console.log(room);
 
+    const totalEstimateRow = `
+    <tr>
+      <th scope="col">${room.name}</th>
+      <th scope="col">${calculateRoomSqft(room)}</th>
+      <th scope="col">$1.00</th>
+      <th scope="col" colspan="2">$${calculateRoomSqft(room)}.00</th>
+    </tr>
+    `;
+
+    totalEstimateRows = totalEstimateRows + totalEstimateRow + "\n";
     let rows = "";
     for (let j = 0; j < room.items.length; j++) {
       const item = room.items[j];
@@ -84,6 +96,42 @@ function renderRooms() {
       </table>
     `
     );
+
+    if(rooms.length > 1) {
+      displayEstimateTotal.innerHTML = "";
+      displayEstimateTotal.insertAdjacentHTML(
+        "beforeend",
+         `
+         <h3>Estimate Total</h3>
+    
+         <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Room</th>
+                <th scope="col">Room Sqft</th>
+                <th scope="col">Price per Sqft</th>
+                <th scope="col" colspan="2">Room Cost</th>
+              </tr>
+            </thead>
+    
+            <tbody>
+              ${totalEstimateRows}
+              <tr>
+                <th scope="row"></th>
+                <th>Estimate Total Sqft:</th>
+                <th colspan="4">${calculateEstimateTotal(room)}</th>
+              </tr>
+              <tr>
+                <th scope="row"></th>
+                <th>Estimate Total Cost:</th>
+                <th colspan="4">$${calculateEstimateTotal(room)}.00</th>
+              </tr>
+            </tbody>
+          </table>
+    
+      `
+      );
+    }
   }
 }
 
@@ -158,7 +206,13 @@ function subItemSqft(roomIndex) {
   renderRooms(addSubItem);
 }
 
-function calculateRoomSqft(room) {
+function removeItem(roomIndex, itemIndex) {
+  rooms[roomIndex].items.splice(itemIndex, 1);
+
+  renderRooms();
+}
+
+function calculateRoomSqft(room, i) {
   var newItemSqft = room.items.map(x => x.itemSqft);
 
   let newRoomSqft = 0;
@@ -171,8 +225,13 @@ function calculateRoomSqft(room) {
   return room.roomSqft;
 }
 
-function removeItem(roomIndex, itemIndex) {
-  rooms[roomIndex].items.splice(itemIndex, 1);
+function calculateEstimateTotal(room) {
+  let estimateTotalSqft = 0;
 
-  renderRooms();
+  for(let i = 0; i < rooms.length; i++) {
+    
+    estimateTotalSqft += calculateRoomSqft(rooms[i]);
+  }
+
+  return estimateTotalSqft;
 }
