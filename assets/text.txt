@@ -696,3 +696,8 @@ function removeItem(roomIndex) {
 
   renderRooms()
 }
+
+
+
+ onclick="subItemSqft(${i})"
+ onclick="addItemSqft(${i})"

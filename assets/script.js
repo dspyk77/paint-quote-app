@@ -1,26 +1,27 @@
 var rooms = [
   {
     name: "",
-    items: []
-  }
-]
- 
-var roomsDiv = document.querySelector("#rooms-div")
-var roomNameInput = document.querySelector("#room-name-input")
-var deleteRoomIndex = document.querySelector("#remove-room-input")
-var roomSqft = 0
-var plusMinus = ""
+    items: [],
+    roomSqft: 0,
+  },
+];
 
-function renderRooms(itemSqft) {
-  roomsDiv.innerHTML = ""
+var roomsDiv = document.querySelector("#rooms-div");
+var roomNameInput = document.querySelector("#room-name-input");
+var deleteRoomIndex = document.querySelector("#remove-room-input");
+
+function renderRooms() {
+  roomsDiv.innerHTML = "";
 
   for (let i = 0; i < rooms.length; i++) {
     const room = rooms[i];
+    console.log(room);
 
     let rows = "";
     for (let j = 0; j < room.items.length; j++) {
       const item = room.items[j];
-      var itemSqft = (item.width * item.height)
+      // var itemSqft = item.width * item.height;
+      
 
       const row = `
       <tr>
@@ -28,7 +29,7 @@ function renderRooms(itemSqft) {
         <td>${item.name}</td>
         <td>${item.width}</td>
         <td>${item.height}</td>
-        <td id="add-sub-item-room-${i}">${item.posOrNeg}${itemSqft}</td>
+        <td id="add-sub-item-room-${i}">${item.itemSqft}</td>
         <td><button onclick="removeItem(${i}, ${j})" class="btn btn-outline-danger btn-sm ms-4">Delete</button></td>
       </tr>
       `;
@@ -36,9 +37,11 @@ function renderRooms(itemSqft) {
       rows = rows + row + "\n";
     }
 
-    roomsDiv.insertAdjacentHTML('beforeend', `
+    roomsDiv.insertAdjacentHTML(
+      "beforeend",
+      `
       <h3>${room.name}</h3>
-      <p>Room # ${i +1}</p>
+      <p>Room # ${i + 1}</p>
       <button onclick="removeRoom(${i})" class="btn btn-outline-danger btn-sm">Remove Room</button>
 
       <table class="table">
@@ -77,29 +80,30 @@ function renderRooms(itemSqft) {
           <tr>
             <th scope="row"></th>
             <th>Total Sqft:</th>
-            <th colspan="4">${roomSqft}</th>
+            <th colspan="4">${calculateRoomSqft(room)}</th>
           </tr>
         </tbody>
       </table>
-    `);
+    `
+    );
   }
 }
 
 function addRoom() {
-  room = {
+  var room = {
     name: roomNameInput.value,
-    items: []
+    items: [],
+  };
+
+  rooms.push(room);
+
+  if (!rooms[0].name) {
+    rooms.splice(0, 1);
   }
 
-  rooms.push(room)
+  roomNameInput.value = "";
 
-  if (rooms[0].name === "") {
-    rooms.splice(0, 1)
-  }
-
-  roomNameInput.value = ""
-
-  renderRooms()
+  renderRooms();
 }
 
 // looking into adding a btn under every room header to del
@@ -107,66 +111,120 @@ function addRoom() {
 // <button onclick="removeRoom()" class="btn btn-primary btn-sm">Remove Room</button>
 
 function removeRoom(roomIndex) {
-  rooms.splice(roomIndex, 1)
+  rooms.splice(roomIndex, 1);
 
-  renderRooms()
+  renderRooms();
 }
 
-function addItemSqft(roomIndex, itemSqft) {
-  var newItemName = document.querySelector(`#new-item-name-input-room-${roomIndex}`)
-  var newItemHeight = document.querySelector(`#new-item-height-input-room-${roomIndex}`)
-  var newItemWidth = document.querySelector(`#new-item-width-input-room-${roomIndex}`)
-  var addSubItem = document.querySelector(`#add-sub-item-room-${roomIndex}`)
+function addItemSqft(roomIndex) {
+  var newItemName = document.querySelector(
+    `#new-item-name-input-room-${roomIndex}`
+  );
+  var newItemHeight = document.querySelector(
+    `#new-item-height-input-room-${roomIndex}`
+  );
+  var newItemWidth = document.querySelector(
+    `#new-item-width-input-room-${roomIndex}`
+  );
+  var addSubItem = document.querySelector(`#add-sub-item-room-${roomIndex}`);
+  
 
   item = {
     name: newItemName.value,
-    width: newItemWidth.value,
-    height: newItemHeight.value,
-    posOrNeg: "+"
-  }
+    width: parseInt(newItemWidth.value),
+    height: parseInt(newItemHeight.value),
+    itemSqft: parseInt(newItemWidth.value * newItemHeight.value)
+  };
 
-  rooms[roomIndex].items.push(item)
+  rooms[roomIndex].items.push(item);
 
+  // itemSqft = (item.width * item.height)
+  // rooms[roomIndex].roomSqft = rooms[roomIndex].roomSqft + itemSqft;
 
-  itemSqft = (item.width * item.height)
-  roomSqft = (roomSqft + itemSqft)
-
-  renderRooms(itemSqft, addSubItem)
+  renderRooms(addSubItem);
 }
 
-function subItemSqft(roomIndex, itemSqft) {
-  var newItemName = document.querySelector(`#new-item-name-input-room-${roomIndex}`)
-  var newItemHeight = document.querySelector(`#new-item-height-input-room-${roomIndex}`)
-  var newItemWidth = document.querySelector(`#new-item-width-input-room-${roomIndex}`)
-  var addSubItem = document.querySelector(`#add-sub-item-room-${roomIndex}`)
+function subItemSqft(roomIndex) {
+  var newItemName = document.querySelector(
+    `#new-item-name-input-room-${roomIndex}`
+  );
+  var newItemHeight = document.querySelector(
+    `#new-item-height-input-room-${roomIndex}`
+  );
+  var newItemWidth = document.querySelector(
+    `#new-item-width-input-room-${roomIndex}`
+  );
+  var addSubItem = document.querySelector(`#add-sub-item-room-${roomIndex}`);
 
-  item = {
+  var item = {
     name: newItemName.value,
-    width: newItemWidth.value,
-    height: newItemHeight.value,
-    posOrNeg: "-"
+    width: -parseInt(newItemWidth.value),
+    height: -parseInt(newItemHeight.value),
+    itemSqft: -parseInt(newItemWidth.value * newItemHeight.value)
+  };
+
+  rooms[roomIndex].items.push(item);
+
+  
+
+  // itemSqft = (item.width * item.height)
+  // rooms[roomIndex].roomSqft = rooms[roomIndex].roomSqft - itemSqft;
+
+  renderRooms(addSubItem);
+}
+// =====================================================================================================
+// AHHHHHHHHH maybe map???? or for each?? how do I get the item value outside of the for loop?????
+ 
+function calculateRoomSqft(room) {
+  // var heights = room.items.map(x => x.height);
+  // var widths = room.items.map(x => x.width);
+
+  // let totalHeight = 0;
+  // for(var i = 0; i < heights.length; i++) {
+  //     totalHeight += heights[i];
+  // }
+
+  // let totalWidth = 0;
+  // for(var i = 0; i < widths.length; i++) {
+  //   totalWidth += widths[i];
+  // }
+
+  // if(isNaN(totalHeight) || isNaN(totalWidth)) return '';
+  // room.roomSqft = totalHeight * totalWidth;
+
+  // console.log(`Total Height: ${totalHeight} Total Width:${totalWidth} Room Sqft: ${room.roomSqft} New Room Array State:${room}`)
+
+  // return room.roomSqft;
+
+  var newItemSqft = room.items.map(x => x.itemSqft);
+
+  let newRoomSqft = 0;
+  for(var i = 0; i < room.items.length; i++) {
+    newRoomSqft += newItemSqft[i];
   }
 
-  rooms[roomIndex].items.push(item)
+  room.roomSqft = newRoomSqft;
 
-  itemSqft = (item.width * item.height)
-  roomSqft = (roomSqft - itemSqft)
+  return room.roomSqft;
 
-  renderRooms(itemSqft, addSubItem)
+  
 }
-
+// ===================================================================================================================
 function removeItem(roomIndex, itemIndex) {
-  var removeItemSqft = (rooms[roomIndex].items[itemIndex].width * rooms[roomIndex].items[itemIndex].height)
-  
-  if (rooms[roomIndex].items[itemIndex].posOrNeg == "+") {
-    roomSqft = (roomSqft - removeItemSqft)
-  } else if (rooms[roomIndex].items[itemIndex].posOrNeg == "-") {
-    roomSqft = (roomSqft + removeItemSqft)
-  }
-  
+  // var removeItemSqft =
+  //   rooms[roomIndex].items[itemIndex].width *
+  //   rooms[roomIndex].items[itemIndex].height;
 
-  rooms[roomIndex].items.splice(itemIndex, 1)
+  // if (rooms[roomIndex].items[itemIndex].posOrNeg == "+") {
+  //   roomSqft = roomSqft - removeItemSqft;
+  // } else if (rooms[roomIndex].items[itemIndex].posOrNeg == "-") {
+  //   roomSqft = roomSqft + removeItemSqft;
+  // }
 
-  renderRooms()
+  rooms[roomIndex].items.splice(itemIndex, 1);
+
+  renderRooms();
 }
+
+
 
