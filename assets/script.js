@@ -20,8 +20,6 @@ function renderRooms() {
     let rows = "";
     for (let j = 0; j < room.items.length; j++) {
       const item = room.items[j];
-      // var itemSqft = item.width * item.height;
-      
 
       const row = `
       <tr>
@@ -106,10 +104,6 @@ function addRoom() {
   renderRooms();
 }
 
-// looking into adding a btn under every room header to del
-// room so no input is needed
-// <button onclick="removeRoom()" class="btn btn-primary btn-sm">Remove Room</button>
-
 function removeRoom(roomIndex) {
   rooms.splice(roomIndex, 1);
 
@@ -127,7 +121,6 @@ function addItemSqft(roomIndex) {
     `#new-item-width-input-room-${roomIndex}`
   );
   var addSubItem = document.querySelector(`#add-sub-item-room-${roomIndex}`);
-  
 
   item = {
     name: newItemName.value,
@@ -137,9 +130,6 @@ function addItemSqft(roomIndex) {
   };
 
   rooms[roomIndex].items.push(item);
-
-  // itemSqft = (item.width * item.height)
-  // rooms[roomIndex].roomSqft = rooms[roomIndex].roomSqft + itemSqft;
 
   renderRooms(addSubItem);
 }
@@ -165,37 +155,10 @@ function subItemSqft(roomIndex) {
 
   rooms[roomIndex].items.push(item);
 
-  
-
-  // itemSqft = (item.width * item.height)
-  // rooms[roomIndex].roomSqft = rooms[roomIndex].roomSqft - itemSqft;
-
   renderRooms(addSubItem);
 }
-// =====================================================================================================
-// AHHHHHHHHH maybe map???? or for each?? how do I get the item value outside of the for loop?????
- 
+
 function calculateRoomSqft(room) {
-  // var heights = room.items.map(x => x.height);
-  // var widths = room.items.map(x => x.width);
-
-  // let totalHeight = 0;
-  // for(var i = 0; i < heights.length; i++) {
-  //     totalHeight += heights[i];
-  // }
-
-  // let totalWidth = 0;
-  // for(var i = 0; i < widths.length; i++) {
-  //   totalWidth += widths[i];
-  // }
-
-  // if(isNaN(totalHeight) || isNaN(totalWidth)) return '';
-  // room.roomSqft = totalHeight * totalWidth;
-
-  // console.log(`Total Height: ${totalHeight} Total Width:${totalWidth} Room Sqft: ${room.roomSqft} New Room Array State:${room}`)
-
-  // return room.roomSqft;
-
   var newItemSqft = room.items.map(x => x.itemSqft);
 
   let newRoomSqft = 0;
@@ -206,25 +169,10 @@ function calculateRoomSqft(room) {
   room.roomSqft = newRoomSqft;
 
   return room.roomSqft;
-
-  
 }
-// ===================================================================================================================
+
 function removeItem(roomIndex, itemIndex) {
-  // var removeItemSqft =
-  //   rooms[roomIndex].items[itemIndex].width *
-  //   rooms[roomIndex].items[itemIndex].height;
-
-  // if (rooms[roomIndex].items[itemIndex].posOrNeg == "+") {
-  //   roomSqft = roomSqft - removeItemSqft;
-  // } else if (rooms[roomIndex].items[itemIndex].posOrNeg == "-") {
-  //   roomSqft = roomSqft + removeItemSqft;
-  // }
-
   rooms[roomIndex].items.splice(itemIndex, 1);
 
   renderRooms();
 }
-
-
-
