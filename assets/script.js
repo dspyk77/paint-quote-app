@@ -23,7 +23,7 @@ function renderRooms() {
     <tr>
       <th scope="col">${room.name}</th>
       <th scope="col">${calculateRoomSqft(room)}</th>
-      <th scope="col">$1.00</th>
+      <th scope="col">$1.50</th>
       <th scope="col" colspan="2">$${calculateRoomSqft(room)}.00</th>
     </tr>
     `;
@@ -119,12 +119,12 @@ function renderRooms() {
               <tr>
                 <th scope="row"></th>
                 <th>Estimate Total Sqft:</th>
-                <th colspan="4">${calculateEstimateTotal(room)}</th>
+                <th colspan="4">${calculateEstimateTotalSqft(room)}</th>
               </tr>
               <tr>
                 <th scope="row"></th>
                 <th>Estimate Total Cost:</th>
-                <th colspan="4">$${calculateEstimateTotal(room)}.00</th>
+                <th colspan="4">$${calculateEstimateTotalPrice(room)}.00</th>
               </tr>
             </tbody>
           </table>
@@ -225,7 +225,7 @@ function calculateRoomSqft(room, i) {
   return room.roomSqft;
 }
 
-function calculateEstimateTotal(room) {
+function calculateEstimateTotalSqft(room) {
   let estimateTotalSqft = 0;
 
   for(let i = 0; i < rooms.length; i++) {
@@ -234,4 +234,17 @@ function calculateEstimateTotal(room) {
   }
 
   return estimateTotalSqft;
+}
+
+function calculateEstimateTotalPrice(room) {
+  let estimateTotalSqft = 0;
+  let estimateTotalPrice = 0;
+
+  for(let i = 0; i < rooms.length; i++) {
+    
+    estimateTotalSqft += calculateRoomSqft(rooms[i]);
+    estimateTotalPrice = (estimateTotalSqft * 1.5)
+  }
+
+  return estimateTotalPrice;
 }
