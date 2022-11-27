@@ -248,3 +248,4 @@ function calculateEstimateTotalPrice(room) {
 
   return estimateTotalPrice;
 }
+// this is a test line
