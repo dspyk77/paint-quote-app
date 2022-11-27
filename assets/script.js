@@ -24,7 +24,7 @@ function renderRooms() {
       <th scope="col">${room.name}</th>
       <th scope="col">${calculateRoomSqft(room)}</th>
       <th scope="col">$1.50</th>
-      <th scope="col" colspan="2">$${calculateRoomCost(room)}.00</th>
+      <th scope="col" colspan="2">$${calculateRoomCost(room)}</th>
     </tr>
     `;
 
@@ -124,7 +124,7 @@ function renderRooms() {
               <tr>
                 <th scope="row"></th>
                 <th>Estimate Total Cost:</th>
-                <th colspan="4">$${calculateEstimateTotalPrice(room)}.00</th>
+                <th colspan="4">$${calculateEstimateTotalPrice(room)}</th>
               </tr>
             </tbody>
           </table>
