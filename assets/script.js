@@ -24,7 +24,7 @@ function renderRooms() {
       <th scope="col">${room.name}</th>
       <th scope="col">${calculateRoomSqft(room)}</th>
       <th scope="col">$1.50</th>
-      <th scope="col" colspan="2">$${calculateRoomSqft(room)}.00</th>
+      <th scope="col" colspan="2">$${calculateRoomCost(room)}.00</th>
     </tr>
     `;
 
@@ -223,6 +223,19 @@ function calculateRoomSqft(room, i) {
   room.roomSqft = newRoomSqft;
 
   return room.roomSqft;
+}
+
+function calculateRoomCost(room, i) {
+  let newItemSqft = room.items.map(x => x.itemSqft);
+  let roomCost = 0
+
+  let newRoomSqft = 0;
+  for(var i = 0; i < room.items.length; i++) {
+    newRoomSqft += newItemSqft[i];
+    roomCost = (newRoomSqft * 1.5)
+  }
+
+  return roomCost;
 }
 
 function calculateEstimateTotalSqft(room) {
