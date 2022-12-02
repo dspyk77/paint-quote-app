@@ -8,18 +8,19 @@ var rooms = [
 
 var roomsDiv = document.querySelector("#rooms-div");
 var roomNameInput = document.querySelector("#room-name-input");
-var deleteRoomIndex = document.querySelector("#remove-room-input");
-let displayEstimateTotal = document.querySelector("#esitmate-totals")
+let displayEstimateTotal = document.querySelector("#esitmate-totals");
+let emptyInputAlert = document.querySelector("#empty-input-alert");
 
 function renderRooms() {
   roomsDiv.innerHTML = "";
+  emptyInputAlert.innerHTML = "";
 
-  let totalEstimateRows = "";
-  for (let i = 0; i < rooms.length; i++) {
-    const room = rooms[i];
-    console.log(room);
+    let totalEstimateRows = "";
+    for (let i = 0; i < rooms.length; i++) {
+      const room = rooms[i];
+      console.log(room);
 
-    const totalEstimateRow = `
+      const totalEstimateRow = `
     <tr>
       <th scope="col">${room.name}</th>
       <th scope="col">${calculateRoomSqft(room)}</th>
@@ -28,12 +29,12 @@ function renderRooms() {
     </tr>
     `;
 
-    totalEstimateRows = totalEstimateRows + totalEstimateRow + "\n";
-    let rows = "";
-    for (let j = 0; j < room.items.length; j++) {
-      const item = room.items[j];
+      totalEstimateRows = totalEstimateRows + totalEstimateRow + "\n";
+      let rows = "";
+      for (let j = 0; j < room.items.length; j++) {
+        const item = room.items[j];
 
-      const row = `
+        const row = `
       <tr>
         <th scope="row">${j + 1}</th>
         <td>${item.name}</td>
@@ -44,12 +45,12 @@ function renderRooms() {
       </tr>
       `;
 
-      rows = rows + row + "\n";
-    }
+        rows = rows + row + "\n";
+      }
 
-    roomsDiv.insertAdjacentHTML(
-      "beforeend",
-      `
+      roomsDiv.insertAdjacentHTML(
+        "beforeend",
+        `
       <h3>${room.name}</h3>
       <p>Room # ${i + 1}</p>
       <button onclick="removeRoom(${i})" class="btn btn-outline-danger btn-sm">Remove Room</button>
@@ -95,13 +96,13 @@ function renderRooms() {
         </tbody>
       </table>
     `
-    );
+      );
 
-    if(rooms.length > 1) {
-      displayEstimateTotal.innerHTML = "";
-      displayEstimateTotal.insertAdjacentHTML(
-        "beforeend",
-         `
+      if (rooms.length > 1) {
+        displayEstimateTotal.innerHTML = "";
+        displayEstimateTotal.insertAdjacentHTML(
+          "beforeend",
+          `
          <h3>Estimate Total</h3>
     
          <table class="table">
@@ -130,26 +131,31 @@ function renderRooms() {
           </table>
     
       `
-      );
+        );
+      }
     }
-  }
+  
 }
 
 function addRoom() {
-  var room = {
-    name: roomNameInput.value,
-    items: [],
-  };
 
-  rooms.push(room);
-
-  if (!rooms[0].name) {
-    rooms.splice(0, 1);
+  if (roomNameInput.value == "") {
+    emptyInputAlertDisplay()
+  } else {
+    var room = {
+      name: roomNameInput.value,
+      items: [],
+    };
+  
+    rooms.push(room);
+  
+    if (!rooms[0].name) {
+      rooms.splice(0, 1);
+    }
+  
+    renderRooms();
+    roomNameInput.value = "";
   }
-
-  roomNameInput.value = "";
-
-  renderRooms();
 }
 
 function removeRoom(roomIndex) {
@@ -170,16 +176,27 @@ function addItemSqft(roomIndex) {
   );
   var addSubItem = document.querySelector(`#add-sub-item-room-${roomIndex}`);
 
-  item = {
-    name: newItemName.value,
-    width: parseInt(newItemWidth.value),
-    height: parseInt(newItemHeight.value),
-    itemSqft: parseInt(newItemWidth.value * newItemHeight.value)
-  };
-
-  rooms[roomIndex].items.push(item);
-
-  renderRooms(addSubItem);
+  if (newItemName.value == "" || newItemHeight.value == "" || newItemWidth.value == "") {
+    emptyInputAlertDisplay()
+    if (newItemName.value == "") {
+      newItemName.className = "border border-danger"
+    } else if (newItemHeight.value == "") {
+      newItemHeight.className = "border border-danger"
+    } else if (newItemWidth.value == "") {
+      newItemWidth.className = "border border-danger"
+    }
+  } else {
+   var item = {
+      name: newItemName.value,
+      width: parseInt(newItemWidth.value),
+      height: parseInt(newItemHeight.value),
+      itemSqft: parseInt(newItemWidth.value * newItemHeight.value),
+    };
+  
+    rooms[roomIndex].items.push(item);
+  
+    renderRooms(addSubItem);
+  }
 }
 
 function subItemSqft(roomIndex) {
@@ -194,16 +211,27 @@ function subItemSqft(roomIndex) {
   );
   var addSubItem = document.querySelector(`#add-sub-item-room-${roomIndex}`);
 
-  var item = {
-    name: newItemName.value,
-    width: -parseInt(newItemWidth.value),
-    height: -parseInt(newItemHeight.value),
-    itemSqft: -parseInt(newItemWidth.value * newItemHeight.value)
-  };
+  if (newItemName.value == "" || newItemHeight.value == "" || newItemWidth.value == "") {
+    emptyInputAlertDisplay()
+    if (newItemName.value == "") {
+      newItemName.className = "border border-danger"
+    } else if (newItemHeight.value == "") {
+      newItemHeight.className = "border border-danger"
+    } else if (newItemWidth.value == "") {
+      newItemWidth.className = "border border-danger"
+    }
+  } else {
+    var item = {
+      name: newItemName.value,
+      width: -parseInt(newItemWidth.value),
+      height: -parseInt(newItemHeight.value),
+      itemSqft: -parseInt(newItemWidth.value * newItemHeight.value),
+    };
 
-  rooms[roomIndex].items.push(item);
+    rooms[roomIndex].items.push(item);
 
-  renderRooms(addSubItem);
+    renderRooms(addSubItem);
+  }
 }
 
 function removeItem(roomIndex, itemIndex) {
@@ -213,10 +241,10 @@ function removeItem(roomIndex, itemIndex) {
 }
 
 function calculateRoomSqft(room, i) {
-  var newItemSqft = room.items.map(x => x.itemSqft);
+  var newItemSqft = room.items.map((x) => x.itemSqft);
 
   let newRoomSqft = 0;
-  for(var i = 0; i < room.items.length; i++) {
+  for (var i = 0; i < room.items.length; i++) {
     newRoomSqft += newItemSqft[i];
   }
 
@@ -226,13 +254,13 @@ function calculateRoomSqft(room, i) {
 }
 
 function calculateRoomCost(room, i) {
-  let newItemSqft = room.items.map(x => x.itemSqft);
-  let roomCost = 0
+  let newItemSqft = room.items.map((x) => x.itemSqft);
+  let roomCost = 0;
 
   let newRoomSqft = 0;
-  for(var i = 0; i < room.items.length; i++) {
+  for (var i = 0; i < room.items.length; i++) {
     newRoomSqft += newItemSqft[i];
-    roomCost = (newRoomSqft * 1.5)
+    roomCost = newRoomSqft * 1.5;
   }
 
   return roomCost;
@@ -241,8 +269,7 @@ function calculateRoomCost(room, i) {
 function calculateEstimateTotalSqft(room) {
   let estimateTotalSqft = 0;
 
-  for(let i = 0; i < rooms.length; i++) {
-    
+  for (let i = 0; i < rooms.length; i++) {
     estimateTotalSqft += calculateRoomSqft(rooms[i]);
   }
 
@@ -253,12 +280,27 @@ function calculateEstimateTotalPrice(room) {
   let estimateTotalSqft = 0;
   let estimateTotalPrice = 0;
 
-  for(let i = 0; i < rooms.length; i++) {
-    
+  for (let i = 0; i < rooms.length; i++) {
     estimateTotalSqft += calculateRoomSqft(rooms[i]);
-    estimateTotalPrice = (estimateTotalSqft * 1.5)
+    estimateTotalPrice = estimateTotalSqft * 1.5;
   }
 
   return estimateTotalPrice;
 }
-// this is a test line
+
+function emptyInputAlertDisplay() {
+  emptyInputAlert.insertAdjacentHTML(
+    "beforeend",
+    `
+       <div id="empty-input-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
+      <span>
+        <i class="bi bi-bandaid"></i><span class="fw-bold">Uh oh!</span>
+        Look's like you left an input box empty! Make sure everthing is filled out and try again<i class="bi bi-hand-thumbs-up"></i>
+      </span>
+      <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  
+    `
+  );
+  emptyInputAlert.scrollIntoView()
+}
