@@ -59,8 +59,8 @@ function renderRooms() {
         <thead>
           <tr>
             <th scope="col"><label for="objectName">New Object Name</label></th>
-            <th scope="col"><label for="objectLenght">Object Width</label></th>
-            <th scope="col"><label for="objectHeight">Object Height</label></th>
+            <th scope="col"><label for="objectLenght">Object Width (ft)</label></th>
+            <th scope="col"><label for="objectHeight">Object Height (ft)</label></th>
           </tr>
         </thead>
         <tbody>
