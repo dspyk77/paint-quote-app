@@ -11,17 +11,18 @@ const roomNameInput = document.querySelector("#room-name-input");
 const displayEstimateTotal = document.querySelector("#esitmate-totals");
 const emptyInputAlert = document.querySelector("#empty-input-alert");
 const ratePerSqftInput = document.querySelector("#rate-per-sqft-input");
+const displayRatePerSqft = document.querySelector("#display-rate-per-sqft");
 
 function renderRooms() {
   roomsDiv.innerHTML = "";
   emptyInputAlert.innerHTML = "";
+  
+  let totalEstimateRows = "";
+  for (let i = 0; i < rooms.length; i++) {
+    const room = rooms[i];
+    console.log(room);
 
-    let totalEstimateRows = "";
-    for (let i = 0; i < rooms.length; i++) {
-      const room = rooms[i];
-      console.log(room);
-
-      const totalEstimateRow = `
+    const totalEstimateRow = `
     <tr>
       <th scope="col">${room.name}</th>
       <th scope="col">${calculateRoomSqft(room)}</th>
@@ -30,12 +31,12 @@ function renderRooms() {
     </tr>
     `;
 
-      totalEstimateRows = totalEstimateRows + totalEstimateRow + "\n";
-      let rows = "";
-      for (let j = 0; j < room.items.length; j++) {
-        const item = room.items[j];
+    totalEstimateRows = totalEstimateRows + totalEstimateRow + "\n";
+    let rows = "";
+    for (let j = 0; j < room.items.length; j++) {
+      const item = room.items[j];
 
-        const row = `
+      const row = `
       <tr>
         <th scope="row">${j + 1}</th>
         <td>${item.name}</td>
@@ -46,12 +47,12 @@ function renderRooms() {
       </tr>
       `;
 
-        rows = rows + row + "\n";
-      }
+      rows = rows + row + "\n";
+    }
 
-      roomsDiv.insertAdjacentHTML(
-        "beforeend",
-        `
+    roomsDiv.insertAdjacentHTML(
+      "beforeend",
+      `
       <h3>${room.name}</h3>
       <p>Room # ${i + 1}</p>
       <button onclick="removeRoom(${i})" class="btn btn-outline-danger btn-sm">Remove Room</button>
@@ -97,13 +98,13 @@ function renderRooms() {
         </tbody>
       </table>
     `
-      );
+    );
 
-      if (rooms.length > 1) {
-        displayEstimateTotal.innerHTML = "";
-        displayEstimateTotal.insertAdjacentHTML(
-          "beforeend",
-          `
+    if (rooms.length > 1) {
+      displayEstimateTotal.innerHTML = "";
+      displayEstimateTotal.insertAdjacentHTML(
+        "beforeend",
+        `
          <h3>Estimate Total</h3>
     
          <table class="table">
@@ -132,37 +133,60 @@ function renderRooms() {
           </table>
     
       `
-        );
-      }
+      );
     }
-  
+  }
 }
+
+ratePerSqftInput.addEventListener('focus', function() {
+  this.value = '';
+});
+
+ratePerSqftInput.addEventListener('keydown', function(event) {
+  if (event.key === 'Enter') {
+    setRate();
+  }
+});
 
 function setRate() {
   if (ratePerSqftInput.value == "") {
-    emptyInputAlertDisplay()
+    emptyInputAlertDisplay();
   } else {
     let ratePerSqft = parseFloat(ratePerSqftInput.value);
+    displayRatePerSqft.innerHTML = "";
+    ratePerSqftInput.innerHTML = "";
+
+    displayRatePerSqft.insertAdjacentHTML(
+      "beforeend",
+      `
+    <span class="fs-5" >The current labor rate entered is</span> <span class="fs-5 fw-semibold">$${ratePerSqft} per sqft.</span>
+    `
+    );
     return ratePerSqft;
   }
 }
 
-function addRoom() {
+roomNameInput.addEventListener('keydown', function(event) {
+  if (event.key === 'Enter') {
+    addRoom();
+  }
+});
 
+function addRoom() {
   if (roomNameInput.value == "") {
-    emptyInputAlertDisplay()
+    emptyInputAlertDisplay();
   } else {
     var room = {
       name: roomNameInput.value,
       items: [],
     };
-  
+
     rooms.push(room);
-  
+
     if (!rooms[0].name) {
       rooms.splice(0, 1);
     }
-  
+
     renderRooms();
     roomNameInput.value = "";
   }
@@ -186,25 +210,29 @@ function addItemSqft(roomIndex) {
   );
   var addSubItem = document.querySelector(`#add-sub-item-room-${roomIndex}`);
 
-  if (newItemName.value == "" || newItemHeight.value == "" || newItemWidth.value == "") {
-    emptyInputAlertDisplay()
+  if (
+    newItemName.value == "" ||
+    newItemHeight.value == "" ||
+    newItemWidth.value == ""
+  ) {
+    emptyInputAlertDisplay();
     if (newItemName.value == "") {
-      newItemName.className = "border border-danger"
+      newItemName.className = "border border-danger";
     } else if (newItemHeight.value == "") {
-      newItemHeight.className = "border border-danger"
+      newItemHeight.className = "border border-danger";
     } else if (newItemWidth.value == "") {
-      newItemWidth.className = "border border-danger"
+      newItemWidth.className = "border border-danger";
     }
   } else {
-   var item = {
+    var item = {
       name: newItemName.value,
       width: parseInt(newItemWidth.value),
       height: parseInt(newItemHeight.value),
       itemSqft: parseInt(newItemWidth.value * newItemHeight.value),
     };
-  
+
     rooms[roomIndex].items.push(item);
-  
+
     renderRooms(addSubItem);
   }
 }
@@ -221,14 +249,18 @@ function subItemSqft(roomIndex) {
   );
   var addSubItem = document.querySelector(`#add-sub-item-room-${roomIndex}`);
 
-  if (newItemName.value == "" || newItemHeight.value == "" || newItemWidth.value == "") {
-    emptyInputAlertDisplay()
+  if (
+    newItemName.value == "" ||
+    newItemHeight.value == "" ||
+    newItemWidth.value == ""
+  ) {
+    emptyInputAlertDisplay();
     if (newItemName.value == "") {
-      newItemName.className = "border border-danger"
+      newItemName.className = "border border-danger";
     } else if (newItemHeight.value == "") {
-      newItemHeight.className = "border border-danger"
+      newItemHeight.className = "border border-danger";
     } else if (newItemWidth.value == "") {
-      newItemWidth.className = "border border-danger"
+      newItemWidth.className = "border border-danger";
     }
   } else {
     var item = {
@@ -312,5 +344,5 @@ function emptyInputAlertDisplay() {
   
     `
   );
-  emptyInputAlert.scrollIntoView()
+  emptyInputAlert.scrollIntoView();
 }

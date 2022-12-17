@@ -42,17 +42,23 @@
             <p class="col-md-8 fs-4">About and how to use</p>
             <button class="btn btn-primary btn-lg" type="button">Get Started</button>
           </div>
+
+          <div class="pb-4">
+            <div>
+              <span>Price/Rate per Sqft</span>
+            </div>
+            <div>
+              $<input id="rate-per-sqft-input" type="number" class="pb-1" value="1.25">
+              <button id="rate-per-sqft-btn" onclick="setRate()" class="btn btn-primary btn-sm">Set Rate</button>
+              <button id="update-totals-btn" onclick="renderRooms()" class="btn btn-primary btn-sm">Update Totals</button>
+            </div>
+          </div>
+          <div class="pb-4" id="display-rate-per-sqft">
+            
+          </div>
         </div>
 
-        <div class="pb-4">
-          <div>
-            <span>Price/Rate per Sqft</span>
-          </div>
-          <div>
-            <input id="rate-per-sqft-input" type="number" class="pb-1">
-            <button id="rate-per-sqft-btn" onclick="setRate()" class="btn btn-primary btn-sm">Set Rate</button>
-          </div>
-        </div>
+        
 
       </section>
 
@@ -69,7 +75,7 @@
         </div>
 
         <div id="empty-input-alert">
-
+          <!-- display empty input error -->
         </div>
 
         <div id="rooms-div" class="mb-5">
