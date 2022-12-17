@@ -6,10 +6,11 @@ var rooms = [
   },
 ];
 
-var roomsDiv = document.querySelector("#rooms-div");
-var roomNameInput = document.querySelector("#room-name-input");
-let displayEstimateTotal = document.querySelector("#esitmate-totals");
-let emptyInputAlert = document.querySelector("#empty-input-alert");
+const roomsDiv = document.querySelector("#rooms-div");
+const roomNameInput = document.querySelector("#room-name-input");
+const displayEstimateTotal = document.querySelector("#esitmate-totals");
+const emptyInputAlert = document.querySelector("#empty-input-alert");
+const ratePerSqftInput = document.querySelector("#rate-per-sqft-input");
 
 function renderRooms() {
   roomsDiv.innerHTML = "";
@@ -24,7 +25,7 @@ function renderRooms() {
     <tr>
       <th scope="col">${room.name}</th>
       <th scope="col">${calculateRoomSqft(room)}</th>
-      <th scope="col">$1.50</th>
+      <th scope="col">$${setRate()}</th>
       <th scope="col" colspan="2">$${calculateRoomCost(room)}</th>
     </tr>
     `;
@@ -135,6 +136,15 @@ function renderRooms() {
       }
     }
   
+}
+
+function setRate() {
+  if (ratePerSqftInput.value == "") {
+    emptyInputAlertDisplay()
+  } else {
+    let ratePerSqft = parseFloat(ratePerSqftInput.value);
+    return ratePerSqft;
+  }
 }
 
 function addRoom() {
@@ -260,32 +270,32 @@ function calculateRoomCost(room, i) {
   let newRoomSqft = 0;
   for (var i = 0; i < room.items.length; i++) {
     newRoomSqft += newItemSqft[i];
-    roomCost = newRoomSqft * 1.5;
+    roomCost = newRoomSqft * setRate();
   }
 
-  return roomCost;
+  return roomCost.toFixed(2);
 }
 
-function calculateEstimateTotalSqft(room) {
+function calculateEstimateTotalSqft() {
   let estimateTotalSqft = 0;
 
   for (let i = 0; i < rooms.length; i++) {
     estimateTotalSqft += calculateRoomSqft(rooms[i]);
   }
 
-  return estimateTotalSqft;
+  return estimateTotalSqft.toFixed(2);
 }
 
-function calculateEstimateTotalPrice(room) {
+function calculateEstimateTotalPrice() {
   let estimateTotalSqft = 0;
   let estimateTotalPrice = 0;
 
   for (let i = 0; i < rooms.length; i++) {
     estimateTotalSqft += calculateRoomSqft(rooms[i]);
-    estimateTotalPrice = estimateTotalSqft * 1.5;
+    estimateTotalPrice = estimateTotalSqft * setRate();
   }
 
-  return estimateTotalPrice;
+  return estimateTotalPrice.toFixed(2);
 }
 
 function emptyInputAlertDisplay() {

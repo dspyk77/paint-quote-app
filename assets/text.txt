@@ -701,3 +701,32 @@ function removeItem(roomIndex) {
 
  onclick="subItemSqft(${i})"
  onclick="addItemSqft(${i})"
+
+
+ To refactor the provided code to be cleaner, here are some suggestions:
+
+Use proper indentation to make the code more readable and easier to follow.
+Use descriptive and concise variable names to make the code more self-explanatory.
+Use functions to break up the code into smaller, more manageable chunks, and to make it easier to test and maintain.
+Use const for variables that don't need to be reassigned, and let for variables that do.
+ This helps to prevent unintended side effects and make the code more predictable.
+Use template literals (enclosed in backticks) instead of string concatenation to make the code more concise and easier to read.
+Avoid using global variables wherever possible, and instead pass variables as arguments to functions or declare them within the functions. 
+This helps to reduce the risk of naming conflicts and makes the code more modular.
+
+
+Event listener for inserted HTML
+
+// Insert the button
+var button = document.createElement('button');
+button.innerHTML = 'Click me';
+document.body.insertAdjacentElement('beforeend', button);
+
+// Attach the event listener to the parent element outside of the for loop
+document.body.addEventListener('click', function(event) {
+  // Check if the clicked element is a button
+  if (event.target.tagName === 'BUTTON') {
+    console.log('Button was clicked');
+  }
+});
+
