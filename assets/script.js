@@ -13,10 +13,11 @@ const emptyInputAlert = document.querySelector("#empty-input-alert");
 const ratePerSqftInput = document.querySelector("#rate-per-sqft-input");
 const displayRatePerSqft = document.querySelector("#display-rate-per-sqft");
 
+// when called displays current values of all rooms and totals section
 function renderRooms() {
   roomsDiv.innerHTML = "";
   emptyInputAlert.innerHTML = "";
-  
+
   let totalEstimateRows = "";
   for (let i = 0; i < rooms.length; i++) {
     const room = rooms[i];
@@ -138,16 +139,29 @@ function renderRooms() {
   }
 }
 
-ratePerSqftInput.addEventListener('focus', function() {
-  this.value = '';
+// when clicking the labor rate input field the inherit set value is cleared
+ratePerSqftInput.addEventListener("focus", (event) => {
+  event.target.value = "";
 });
 
-ratePerSqftInput.addEventListener('keydown', function(event) {
-  if (event.key === 'Enter') {
+// allows entered labor rate to be sumbited using the enter btn
+ratePerSqftInput.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
     setRate();
   }
 });
 
+// sumbits entered labor rate when the "set rate" btn is clicked
+document.querySelector("#rate-per-sqft-btn").addEventListener("click", () => {
+  setRate();
+});
+
+// re renders rooms if labor rate is changed after values are displayed when "update totals" btn is clicked
+document.querySelector("#update-totals-btn").addEventListener("click", () => {
+  renderRooms();
+});
+
+// checks if input has value if !value displays error else stores input value and displays value
 function setRate() {
   if (ratePerSqftInput.value == "") {
     emptyInputAlertDisplay();
@@ -166,12 +180,15 @@ function setRate() {
   }
 }
 
-roomNameInput.addEventListener('keydown', function(event) {
-  if (event.key === 'Enter') {
+// allows entered room name to be sumbited using the enter btn
+roomNameInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
     addRoom();
   }
 });
 
+// checks if input has value if !value displays error else pushes room array to rooms then removes default room and
+// renders rooms display with new values
 function addRoom() {
   if (roomNameInput.value == "") {
     emptyInputAlertDisplay();
@@ -192,12 +209,18 @@ function addRoom() {
   }
 }
 
+// removes selected room then renders rooms display with remaining values
 function removeRoom(roomIndex) {
   rooms.splice(roomIndex, 1);
 
   renderRooms();
 }
 
+// checks if input has value if !value displays red border on empty input field and displays error msg
+// stores indexed room new objects input values
+// parse's input strings to numbers
+// pushes values to indexed room array
+// renders room display with added values
 function addItemSqft(roomIndex) {
   var newItemName = document.querySelector(
     `#new-item-name-input-room-${roomIndex}`
@@ -237,6 +260,11 @@ function addItemSqft(roomIndex) {
   }
 }
 
+// checks if input has value if !value displays red border on empty input field and displays error msg
+// stores indexed room new objects input values
+// parse's input strings to negitive numbers for subtracting
+// pushes values to indexed room array
+// renders room display with added values
 function subItemSqft(roomIndex) {
   var newItemName = document.querySelector(
     `#new-item-name-input-room-${roomIndex}`
@@ -276,12 +304,15 @@ function subItemSqft(roomIndex) {
   }
 }
 
+// removes item/object from indexed rooms array
+// renders room display with remaining values
 function removeItem(roomIndex, itemIndex) {
   rooms[roomIndex].items.splice(itemIndex, 1);
 
   renderRooms();
 }
 
+// calculates each rooms sqft and returns result
 function calculateRoomSqft(room, i) {
   var newItemSqft = room.items.map((x) => x.itemSqft);
 
@@ -295,6 +326,7 @@ function calculateRoomSqft(room, i) {
   return room.roomSqft;
 }
 
+// calculates each rooms cost of labor and returns result
 function calculateRoomCost(room, i) {
   let newItemSqft = room.items.map((x) => x.itemSqft);
   let roomCost = 0;
@@ -308,6 +340,8 @@ function calculateRoomCost(room, i) {
   return roomCost.toFixed(2);
 }
 
+// calculates a total of all rooms sqft
+// returns result converted back to string only displaying 2 places after decemal
 function calculateEstimateTotalSqft() {
   let estimateTotalSqft = 0;
 
@@ -318,6 +352,8 @@ function calculateEstimateTotalSqft() {
   return estimateTotalSqft.toFixed(2);
 }
 
+// calculates a total of all rooms cost of labor
+// returns result converted back to string only displaying 2 places after decemal
 function calculateEstimateTotalPrice() {
   let estimateTotalSqft = 0;
   let estimateTotalPrice = 0;
@@ -330,6 +366,8 @@ function calculateEstimateTotalPrice() {
   return estimateTotalPrice.toFixed(2);
 }
 
+// when called displays error msg for empty input fields
+// scrolls to error msg
 function emptyInputAlertDisplay() {
   emptyInputAlert.insertAdjacentHTML(
     "beforeend",
