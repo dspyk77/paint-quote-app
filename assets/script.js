@@ -56,7 +56,10 @@ function renderRooms() {
       `
       <h3>${room.name}</h3>
       <p>Room # ${i + 1}</p>
+      
       <button onclick="removeRoom(${i})" class="btn btn-outline-danger btn-sm">Remove Room</button>
+      <button class="btn btn-primary btn-sm" >Add Cabinets</button>
+      <button class="btn btn-primary btn-sm" >Add Furniture</button>
 
       <table class="table">
         <thead>
