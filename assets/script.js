@@ -69,7 +69,10 @@ function renderRooms() {
             <div class="modal-content">
 
               <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Add Cabinets to ${room.name}</h5>
+                <div class="row">
+                  <h5 class="modal-title" id="myModalLabel">Add Cabinets to ${room.name}</h5>
+                  <span class="fst-italic">Add cabinets that will be painted or refinished in the ${room.name}</span>
+                </div>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -132,7 +135,10 @@ function renderRooms() {
             <div class="modal-content">
 
               <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Add Furniture to ${room.name}</h5>
+                <div>
+                  <h5 class="modal-title" id="myModalLabel">Add Furniture to ${room.name}</h5>
+                  <span class="fst-italic">Add furniture that will be painted or refinished in the ${room.name}</span>
+                </div>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
