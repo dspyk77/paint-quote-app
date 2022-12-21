@@ -27,7 +27,7 @@ function renderRooms() {
     <tr>
       <th scope="col">${room.name}</th>
       <th scope="col">${calculateRoomSqft(room)}</th>
-      <th scope="col">$${setRate()}</th>
+      <th scope="col">$${setPaintRate()}</th>
       <th scope="col" colspan="2">$${calculateRoomCost(room)}</th>
     </tr>
     `;
@@ -54,9 +54,117 @@ function renderRooms() {
     roomsDiv.insertAdjacentHTML(
       "beforeend",
       `
-      <h3>${room.name}</h3>
+      <!-- id room-name is for edit room btn in totals section (in backlog)-->
+      <h3 id="room-name${i}">${room.name}</h3>
       <p>Room # ${i + 1}</p>
+
       <button onclick="removeRoom(${i})" class="btn btn-outline-danger btn-sm">Remove Room</button>
+
+      <!-- Button that triggers the cabinet modal -->
+      <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#cabinet-modal${i}">Add Cabinets</button>
+
+        <!-- Cabinet Modal -->
+        <div class="modal fade" id="cabinet-modal${i}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+              <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Add Cabinets to ${room.name}</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+
+              <div class="modal-body">
+                <!-- Form content goes here -->
+                <form>
+                  <div class="form-group row">
+                    <div class="col-md-6">
+                      <label for="num-of-bases">Number of Bases</label>
+                      <input type="number" class="form-control" id="num-of-bases${i}" placeholder="Number of cabinet bases">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="price-per-bases">Price per Base</label>
+                      <input type="number" class="form-control" id="price-per-bases${i}" placeholder="$250">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-6">
+                      <label for="num-of-doors">Number of Doors</label>
+                      <input type="number" class="form-control" id="num-of-doors${i}" placeholder="Number of cabinet doors">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="price-per-door">Price per Door</label>
+                      <input type="number" class="form-control" id="price-per-door${i}" placeholder="$75">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-6">
+                      <label for="num-of-drawers">Number of Drawers</label>
+                      <input type="number" class="form-control" id="num-of-drawers${i}" placeholder="Number of cabinet drawers">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="price-per-drawer">Price per Drawer</label>
+                      <input type="number" class="form-control" id="price-per-drawer${i}" placeholder="$50">
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <div class="modal-footer">
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn btn-primary">Add Cabinet(s)</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Button that triggers the furniture modal -->
+        <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#furniture-modal${i}">Add Furniture</button>
+
+        <!-- Furniture Modal -->
+        <div class="modal fade" id="furniture-modal${i}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+              <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Add Furniture to ${room.name}</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+
+              <div class="modal-body">
+                <!-- Form content goes here -->
+                <form>
+                  <div class="form-group">
+                    <label for="furniture-name">Name of Furniture</label>
+                    <input type="text" class="form-control" id="furniture-name${i}" placeholder="Arm chair, stool, bench ect.">
+
+                    <label for="num-of-pieces">Number of Pieces</label>
+                    <input type="number" class="form-control" id="num-of-pieces${i}" placeholder="Number of furniture peices">
+
+                    <label for="price-per-furniture-piece">Price per Piece</label>
+                    <input type="number" class="form-control" id="price-per-furniture-piece${i}" placeholder="$100">
+                  </div>
+                </form>
+              </div>
+
+              <div class="modal-footer">
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn btn-primary">Add Furniture</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
 
       <table class="table">
         <thead>
@@ -147,13 +255,13 @@ ratePerSqftInput.addEventListener("focus", (event) => {
 // allows entered labor rate to be sumbited using the enter btn
 ratePerSqftInput.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
-    setRate();
+    setPaintRate();
   }
 });
 
 // sumbits entered labor rate when the "set rate" btn is clicked
 document.querySelector("#rate-per-sqft-btn").addEventListener("click", () => {
-  setRate();
+  setPaintRate();
 });
 
 // re renders rooms if labor rate is changed after values are displayed when "update totals" btn is clicked
@@ -162,7 +270,7 @@ document.querySelector("#update-totals-btn").addEventListener("click", () => {
 });
 
 // checks if input has value if !value displays error else stores input value and displays value
-function setRate() {
+function setPaintRate() {
   if (ratePerSqftInput.value == "") {
     emptyInputAlertDisplay();
   } else {
@@ -334,7 +442,7 @@ function calculateRoomCost(room, i) {
   let newRoomSqft = 0;
   for (var i = 0; i < room.items.length; i++) {
     newRoomSqft += newItemSqft[i];
-    roomCost = newRoomSqft * setRate();
+    roomCost = newRoomSqft * setPaintRate();
   }
 
   return roomCost.toFixed(2);
@@ -360,7 +468,7 @@ function calculateEstimateTotalPrice() {
 
   for (let i = 0; i < rooms.length; i++) {
     estimateTotalSqft += calculateRoomSqft(rooms[i]);
-    estimateTotalPrice = estimateTotalSqft * setRate();
+    estimateTotalPrice = estimateTotalSqft * setPaintRate();
   }
 
   return estimateTotalPrice.toFixed(2);
