@@ -2,9 +2,13 @@ var rooms = [
   {
     name: "",
     items: [],
+    cabinets: [],
+    furniture: [],
     roomSqft: 0,
   },
 ];
+
+console.log(rooms);
 
 const roomsDiv = document.querySelector("#rooms-div");
 const roomNameInput = document.querySelector("#room-name-input");
@@ -70,8 +74,12 @@ function renderRooms() {
 
               <div class="modal-header">
                 <div class="row">
-                  <h5 class="modal-title" id="myModalLabel">Add Cabinets to ${room.name}</h5>
-                  <span class="fst-italic">Add cabinets that will be painted or refinished in the ${room.name}</span>
+                  <h5 class="modal-title" id="myModalLabel">Add Cabinets to ${
+                    room.name
+                  }</h5>
+                  <span class="fst-italic">Add cabinets that will be painted or refinished in the ${
+                    room.name
+                  }</span>
                 </div>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
@@ -84,31 +92,31 @@ function renderRooms() {
                   <div class="form-group row">
                     <div class="col-md-6">
                       <label for="num-of-bases">Number of Bases</label>
-                      <input type="number" class="form-control" id="num-of-bases${i}" placeholder="Number of cabinet bases">
+                      <input type="number" class="form-control" id="num-of-bases-${i}" placeholder="Number of cabinet bases">
                     </div>
                     <div class="col-md-6">
                       <label for="price-per-bases">Price per Base</label>
-                      <input type="number" class="form-control" id="price-per-bases${i}" placeholder="$250">
+                      <input type="number" class="form-control" id="price-per-bases-${i}" placeholder="$250">
                     </div>
                   </div>
                   <div class="form-group row">
                     <div class="col-md-6">
                       <label for="num-of-doors">Number of Doors</label>
-                      <input type="number" class="form-control" id="num-of-doors${i}" placeholder="Number of cabinet doors">
+                      <input type="number" class="form-control" id="num-of-doors-${i}" placeholder="Number of cabinet doors">
                     </div>
                     <div class="col-md-6">
                       <label for="price-per-door">Price per Door</label>
-                      <input type="number" class="form-control" id="price-per-door${i}" placeholder="$75">
+                      <input type="number" class="form-control" id="price-per-door-${i}" placeholder="$75">
                     </div>
                   </div>
                   <div class="form-group row">
                     <div class="col-md-6">
                       <label for="num-of-drawers">Number of Drawers</label>
-                      <input type="number" class="form-control" id="num-of-drawers${i}" placeholder="Number of cabinet drawers">
+                      <input type="number" class="form-control" id="num-of-drawers-${i}" placeholder="Number of cabinet drawers">
                     </div>
                     <div class="col-md-6">
                       <label for="price-per-drawer">Price per Drawer</label>
-                      <input type="number" class="form-control" id="price-per-drawer${i}" placeholder="$50">
+                      <input type="number" class="form-control" id="price-per-drawer-${i}" placeholder="$50">
                     </div>
                   </div>
                 </form>
@@ -118,7 +126,7 @@ function renderRooms() {
                 <!-- Modal footer -->
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                  <button type="submit" class="btn btn-primary">Add Cabinet(s)</button>
+                  <button type="submit" class="btn btn-primary" onclick="addCabinets(${i})">Add Cabinet(s)</button>
                 </div>
               </div>
 
@@ -136,8 +144,12 @@ function renderRooms() {
 
               <div class="modal-header">
                 <div>
-                  <h5 class="modal-title" id="myModalLabel">Add Furniture to ${room.name}</h5>
-                  <span class="fst-italic">Add furniture that will be painted or refinished in the ${room.name}</span>
+                  <h5 class="modal-title" id="myModalLabel">Add Furniture to ${
+                    room.name
+                  }</h5>
+                  <span class="fst-italic">Add furniture that will be painted or refinished in the ${
+                    room.name
+                  }</span>
                 </div>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
@@ -149,13 +161,13 @@ function renderRooms() {
                 <form>
                   <div class="form-group">
                     <label for="furniture-name">Name of Furniture</label>
-                    <input type="text" class="form-control" id="furniture-name${i}" placeholder="Arm chair, stool, bench ect.">
+                    <input type="text" class="form-control" id="furniture-name-${i}" placeholder="Arm chair, stool, bench ect.">
 
                     <label for="num-of-pieces">Number of Pieces</label>
-                    <input type="number" class="form-control" id="num-of-pieces${i}" placeholder="Number of furniture peices">
+                    <input type="number" class="form-control" id="num-of-pieces-${i}" placeholder="Number of furniture peices">
 
                     <label for="price-per-furniture-piece">Price per Piece</label>
-                    <input type="number" class="form-control" id="price-per-furniture-piece${i}" placeholder="$100">
+                    <input type="number" class="form-control" id="price-per-furniture-piece-${i}" placeholder="$100">
                   </div>
                 </form>
               </div>
@@ -344,7 +356,6 @@ function addItemSqft(roomIndex) {
   var newItemWidth = document.querySelector(
     `#new-item-width-input-room-${roomIndex}`
   );
-  var addSubItem = document.querySelector(`#add-sub-item-room-${roomIndex}`);
 
   if (
     newItemName.value == "" ||
@@ -369,7 +380,7 @@ function addItemSqft(roomIndex) {
 
     rooms[roomIndex].items.push(item);
 
-    renderRooms(addSubItem);
+    renderRooms();
   }
 }
 
@@ -388,7 +399,6 @@ function subItemSqft(roomIndex) {
   var newItemWidth = document.querySelector(
     `#new-item-width-input-room-${roomIndex}`
   );
-  var addSubItem = document.querySelector(`#add-sub-item-room-${roomIndex}`);
 
   if (
     newItemName.value == "" ||
@@ -413,8 +423,36 @@ function subItemSqft(roomIndex) {
 
     rooms[roomIndex].items.push(item);
 
-    renderRooms(addSubItem);
+    renderRooms();
   }
+}
+
+// pushes cabinets input value to rooms array
+function addCabinets(roomIndex) {
+  let newNumOfBases = document.querySelector(`#num-of-bases-${roomIndex}`);
+  let newPricePerBase = document.querySelector(`#price-per-bases-${roomIndex}`);
+  let newNumOfDoors = document.querySelector(`#num-of-doors-${roomIndex}`);
+  let newPricePerDoor = document.querySelector(`#price-per-door-${roomIndex}`);
+  let newNumOfDrawers = document.querySelector(`#num-of-drawers-${roomIndex}`);
+  let newPricePerDrawer = document.querySelector(
+    `#price-per-drawer-${roomIndex}`
+  );
+
+  var cabinet = {
+    numOfBases: parseInt(newNumOfBases.value),
+    pricePerBase: parseInt(newPricePerBase.value),
+    numOfDoors: parseInt(newNumOfDoors.value),
+    pricePerDoor: parseInt(newPricePerDoor.value),
+    numOfDrawers: parseInt(newNumOfDrawers.value),
+    pricePerDrawer: parseInt(newPricePerDrawer.value),
+  };
+
+  console.log(cabinet);
+  console.log(rooms[roomIndex]);
+  console.log(rooms);
+
+
+  rooms[roomIndex].cabinets.push(cabinet);
 }
 
 // removes item/object from indexed rooms array
