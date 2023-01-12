@@ -438,6 +438,8 @@ function addCabinets(roomIndex) {
     `#price-per-drawer-${roomIndex}`
   );
 
+  rooms[roomIndex].cabinets = [];
+
   var cabinet = {
     numOfBases: parseInt(newNumOfBases.value),
     pricePerBase: parseInt(newPricePerBase.value),
@@ -450,6 +452,7 @@ function addCabinets(roomIndex) {
   console.log(cabinet);
   console.log(rooms[roomIndex]);
   console.log(rooms);
+  console.log(rooms[roomIndex].cabinets);
 
 
   rooms[roomIndex].cabinets.push(cabinet);
