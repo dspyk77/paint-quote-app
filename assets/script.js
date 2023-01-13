@@ -176,7 +176,7 @@ function renderRooms() {
                 <!-- Modal footer -->
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                  <button type="submit" class="btn btn-primary">Add Furniture</button>
+                  <button type="submit" onclick="addFurniture(${i})" class="btn btn-primary">Add Furniture</button>
                 </div>
               </div>
 
@@ -427,7 +427,7 @@ function subItemSqft(roomIndex) {
   }
 }
 
-// pushes cabinets input value to rooms array
+// pushes cabinets input value to indexed rooms array
 function addCabinets(roomIndex) {
   let newNumOfBases = document.querySelector(`#num-of-bases-${roomIndex}`);
   let newPricePerBase = document.querySelector(`#price-per-bases-${roomIndex}`);
@@ -456,6 +456,29 @@ function addCabinets(roomIndex) {
 
 
   rooms[roomIndex].cabinets.push(cabinet);
+}
+
+// pushes cabinets input value to indexed rooms array
+function addFurniture(roomIndex) {
+  let newFurnitureName = document.querySelector(`#furniture-name-${roomIndex}`);
+  let newNumOfPieces = document.querySelector(`#num-of-pieces-${roomIndex}`);
+  let newPricePerFurniturePiece = document.querySelector(`#price-per-furniture-piece-${roomIndex}`);
+
+  rooms[roomIndex].furniture = [];
+
+  var newFurniture = {
+    FurnitureName: newFurnitureName.value,
+    NumOfPieces: parseInt(newNumOfPieces.value),
+    PricePerFurniturePiece: parseInt(newPricePerFurniturePiece.value),
+  };
+
+  console.log(newFurniture);
+  console.log(rooms[roomIndex]);
+  console.log(rooms);
+  console.log(rooms[roomIndex].furniture);
+
+
+  rooms[roomIndex].furniture.push(newFurniture);
 }
 
 // removes item/object from indexed rooms array
