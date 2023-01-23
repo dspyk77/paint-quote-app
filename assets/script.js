@@ -25,7 +25,6 @@ function renderRooms() {
   let totalEstimateRows = "";
   for (let i = 0; i < rooms.length; i++) {
     const room = rooms[i];
-    console.log(room);
 
     const totalEstimateRow = `
     <tr>
@@ -37,10 +36,12 @@ function renderRooms() {
     `;
 
     totalEstimateRows = totalEstimateRows + totalEstimateRow + "\n";
+
     let rows = "";
+    let cabinetRows = "";
     for (let j = 0; j < room.items.length; j++) {
       const item = room.items[j];
-
+      
       const row = `
       <tr>
         <th scope="row">${j + 1}</th>
@@ -53,6 +54,20 @@ function renderRooms() {
       `;
 
       rows = rows + row + "\n";
+
+      const cabinet = room.cabinets[j];
+
+      const cabinetRow =  `
+      <tr>
+        <th scope="row">${j + 1}</th>
+        <td>${cabinet.numOfBases}</td>
+        <td>${cabinet.numOfDoors}</td>
+        <td>${cabinet.numOfDrawers}</td>
+        <td><button onclick="removeItem(${i}, ${j})" class="btn btn-outline-danger btn-sm ms-4">Delete</button></td>
+      </tr>
+      `;
+
+      cabinetRows = cabinetRows + cabinetRow + "\n";
     }
 
     roomsDiv.insertAdjacentHTML(
@@ -126,7 +141,7 @@ function renderRooms() {
                 <!-- Modal footer -->
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                  <button type="submit" class="btn btn-primary" onclick="addCabinets(${i})">Add Cabinet(s)</button>
+                  <button type="submit" class="btn btn-primary" onclick="addCabinets(${i})" data-bs-dismiss="modal">Add Cabinet(s)</button>
                 </div>
               </div>
 
@@ -183,7 +198,8 @@ function renderRooms() {
             </div>
           </div>
         </div>
-
+        
+        <!-- room input table -->
       <table class="table">
         <thead>
           <tr>
@@ -204,6 +220,8 @@ function renderRooms() {
           </tr>
         </tbody>
       </table>
+      
+      <!-- room object display table -->
       <table class="table">
         <thead>
           <tr>
@@ -223,6 +241,23 @@ function renderRooms() {
             <th colspan="4">${calculateRoomSqft(room)}</th>
           </tr>
         </tbody>
+      </table>
+
+      <!-- room cabinet display -->
+      <table class="table">
+        <h4>Cabinets</h4>
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Number of Bases</th>
+              <th scope="col">Nubmer of Doors</th>
+              <th scope="col">Number of Drawers</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            ${cabinetRows}
+          </tbody>
       </table>
     `
     );
@@ -449,13 +484,9 @@ function addCabinets(roomIndex) {
     pricePerDrawer: parseInt(newPricePerDrawer.value),
   };
 
-  console.log(cabinet);
-  console.log(rooms[roomIndex]);
-  console.log(rooms);
-  console.log(rooms[roomIndex].cabinets);
-
-
   rooms[roomIndex].cabinets.push(cabinet);
+
+  renderRooms();
 }
 
 // pushes cabinets input value to indexed rooms array
