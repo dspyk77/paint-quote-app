@@ -17,12 +17,13 @@ const emptyInputAlert = document.querySelector("#empty-input-alert");
 const ratePerSqftInput = document.querySelector("#rate-per-sqft-input");
 const displayRatePerSqft = document.querySelector("#display-rate-per-sqft");
 
-// when called displays current values of all rooms and totals section
+// when called displays current values of all rooms and totals sections
 function renderRooms() {
   roomsDiv.innerHTML = "";
   emptyInputAlert.innerHTML = "";
 
   let totalEstimateRows = "";
+  let cabinetRows = "";
   for (let i = 0; i < rooms.length; i++) {
     const room = rooms[i];
 
@@ -37,8 +38,23 @@ function renderRooms() {
 
     totalEstimateRows = totalEstimateRows + totalEstimateRow + "\n";
 
+    if( typeof rooms[i].cabinets !== 'undefined' && rooms[i].cabinets.length > 0) {
+      const cabinetDisplay = room.cabinets[0];
+
+        const cabinetRow =  `
+        <tr>
+          <th scope="row">${1}</th>
+          <td>${cabinetDisplay.numOfBases}</td>
+          <td>${cabinetDisplay.numOfDoors}</td>
+          <td>${cabinetDisplay.numOfDrawers}</td>
+          <td><button onclick="" class="btn btn-outline-danger btn-sm ms-4">Edit</button></td>
+        </tr>
+        `;
+
+        cabinetRows = cabinetRows + cabinetRow + "\n";
+    };
+
     let rows = "";
-    let cabinetRows = "";
     for (let j = 0; j < room.items.length; j++) {
       const item = room.items[j];
       
@@ -55,19 +71,6 @@ function renderRooms() {
 
       rows = rows + row + "\n";
 
-      const cabinet = room.cabinets[j];
-
-      const cabinetRow =  `
-      <tr>
-        <th scope="row">${j + 1}</th>
-        <td>${cabinet.numOfBases}</td>
-        <td>${cabinet.numOfDoors}</td>
-        <td>${cabinet.numOfDrawers}</td>
-        <td><button onclick="removeItem(${i}, ${j})" class="btn btn-outline-danger btn-sm ms-4">Delete</button></td>
-      </tr>
-      `;
-
-      cabinetRows = cabinetRows + cabinetRow + "\n";
     }
 
     roomsDiv.insertAdjacentHTML(
@@ -259,6 +262,7 @@ function renderRooms() {
             ${cabinetRows}
           </tbody>
       </table>
+      
     `
     );
 
@@ -268,7 +272,7 @@ function renderRooms() {
         "beforeend",
         `
          <h3>Estimate Total</h3>
-    
+
          <table class="table">
             <thead>
               <tr>
@@ -278,7 +282,7 @@ function renderRooms() {
                 <th scope="col" colspan="2">Room Cost</th>
               </tr>
             </thead>
-    
+
             <tbody>
               ${totalEstimateRows}
               <tr>
@@ -484,6 +488,7 @@ function addCabinets(roomIndex) {
     pricePerDrawer: parseInt(newPricePerDrawer.value),
   };
 
+  rooms[roomIndex].cabinets.splice(0, 1);
   rooms[roomIndex].cabinets.push(cabinet);
 
   renderRooms();
