@@ -51,7 +51,7 @@ function renderRooms() {
         </tr>
         `;
 
-        cabinetRows = cabinetRows + cabinetRow + "\n";
+        cabinetRows = cabinetRow + "\n";
     };
 
     let rows = "";
@@ -83,9 +83,11 @@ function renderRooms() {
       <button onclick="removeRoom(${i})" class="btn btn-outline-danger btn-sm">Remove Room</button>
 
       <!-- Button that triggers the cabinet modal -->
+
       <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#cabinet-modal${i}">Add Cabinets</button>
 
         <!-- Cabinet Modal -->
+
         <div class="modal fade" id="cabinet-modal${i}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -105,7 +107,9 @@ function renderRooms() {
               </div>
 
               <div class="modal-body">
+
                 <!-- Form content goes here -->
+
                 <form>
                   <div class="form-group row">
                     <div class="col-md-6">
@@ -141,7 +145,9 @@ function renderRooms() {
               </div>
 
               <div class="modal-footer">
+
                 <!-- Modal footer -->
+
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                   <button type="submit" class="btn btn-primary" onclick="addCabinets(${i})" data-bs-dismiss="modal">Add Cabinet(s)</button>
@@ -153,9 +159,11 @@ function renderRooms() {
         </div>
 
         <!-- Button that triggers the furniture modal -->
+
         <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#furniture-modal${i}">Add Furniture</button>
 
         <!-- Furniture Modal -->
+
         <div class="modal fade" id="furniture-modal${i}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -175,7 +183,9 @@ function renderRooms() {
               </div>
 
               <div class="modal-body">
+
                 <!-- Form content goes here -->
+
                 <form>
                   <div class="form-group">
                     <label for="furniture-name">Name of Furniture</label>
@@ -191,7 +201,9 @@ function renderRooms() {
               </div>
 
               <div class="modal-footer">
+
                 <!-- Modal footer -->
+
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                   <button type="submit" onclick="addFurniture(${i})" class="btn btn-primary">Add Furniture</button>
@@ -203,6 +215,7 @@ function renderRooms() {
         </div>
         
         <!-- room input table -->
+
       <table class="table">
         <thead>
           <tr>
@@ -225,6 +238,7 @@ function renderRooms() {
       </table>
       
       <!-- room object display table -->
+
       <table class="table">
         <thead>
           <tr>
@@ -245,26 +259,33 @@ function renderRooms() {
           </tr>
         </tbody>
       </table>
-
-      <!-- room cabinet display -->
-      <table class="table">
-        <h4>Cabinets</h4>
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Number of Bases</th>
-              <th scope="col">Nubmer of Doors</th>
-              <th scope="col">Number of Drawers</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            ${cabinetRows}
-          </tbody>
-      </table>
-      
     `
     );
+
+    if (typeof rooms[i].cabinets !== 'undefined' && rooms[i].cabinets.length > 0) {
+      // room cabinet display
+      roomsDiv.insertAdjacentHTML(
+        "beforeend",
+        `
+        <table class="table">
+          <h4>Cabinets</h4>
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Number of Bases</th>
+                <th scope="col">Nubmer of Doors</th>
+                <th scope="col">Number of Drawers</th>
+              </tr>
+            </thead>
+  
+            <tbody>
+              ${cabinetRows}
+            </tbody>
+        </table>
+      `
+      );
+    };
+    
 
     if (rooms.length > 1) {
       displayEstimateTotal.innerHTML = "";
