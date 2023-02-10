@@ -162,16 +162,12 @@ function addFurniture(roomIndex) {
   rooms[roomIndex].furniture = [];
 
   var newFurniture = {
-    FurnitureName: newFurnitureName.value,
-    NumOfPieces: parseInt(newNumOfPieces.value),
-    PricePerFurniturePiece: parseInt(newPricePerFurniturePiece.value),
+    furnitureName: newFurnitureName.value,
+    numOfPieces: parseInt(newNumOfPieces.value),
+    pricePerFurniturePiece: parseInt(newPricePerFurniturePiece.value),
   };
 
-  console.log(newFurniture);
-  console.log(rooms[roomIndex]);
-  console.log(rooms);
-  console.log(rooms[roomIndex].furniture);
-
-
   rooms[roomIndex].furniture.push(newFurniture);
+
+  renderRooms();
 }

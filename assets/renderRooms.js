@@ -54,10 +54,12 @@ function renderRooms() {
         cabinetRows = cabinetRow + "\n";
     };
 
+    
+
     let rows = "";
     for (let j = 0; j < room.items.length; j++) {
       const item = room.items[j];
-      
+
       const row = `
       <tr>
         <th scope="row">${j + 1}</th>
@@ -70,8 +72,27 @@ function renderRooms() {
       `;
 
       rows = rows + row + "\n";
-
     }
+
+    let furnitureRows = "";
+    if( typeof rooms[i].furniture !== 'undefined' && rooms[i].furniture.length > 0) {
+      for (let k = 0; k < room.furniture.length; k++) { 
+        const furnitureDisplay = room.furniture[k];
+  
+          const furnitureRow =  `
+          <tr>
+            <th scope="row">${1}</th>
+            <td>${furnitureDisplay.furnitureName}</td>
+            <td>${furnitureDisplay.numOfPieces}</td>
+            <td><button onclick="" class="btn btn-outline-danger btn-sm ms-4">Edit</button></td>
+          </tr>
+          `;
+  
+          furnitureRows = furnitureRows + furnitureRow + "\n";
+      };
+    };
+    
+    
 
     roomsDiv.insertAdjacentHTML(
       "beforeend",
@@ -206,7 +227,7 @@ function renderRooms() {
 
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                  <button type="submit" onclick="addFurniture(${i})" class="btn btn-primary">Add Furniture</button>
+                  <button type="submit" onclick="addFurniture(${i})" class="btn btn-primary" data-bs-dismiss="modal">Add Furniture</button>
                 </div>
               </div>
 
@@ -285,41 +306,61 @@ function renderRooms() {
       `
       );
     };
-    
 
-    if (rooms.length > 1) {
-      displayEstimateTotal.innerHTML = "";
-      displayEstimateTotal.insertAdjacentHTML(
+    if (typeof rooms[i].furniture !== 'undefined' && rooms[i].furniture.length > 0) {
+      // room furniture display
+      roomsDiv.insertAdjacentHTML(
         "beforeend",
         `
-         <h3>Estimate Total</h3>
-
-         <table class="table">
+        <table class="table">
+          <h4>Furnitue</h4>
             <thead>
               <tr>
-                <th scope="col">Room</th>
-                <th scope="col">Room Sqft</th>
-                <th scope="col">Price per Sqft</th>
-                <th scope="col" colspan="2">Room Cost</th>
+                <th scope="col">#</th>
+                <th scope="col">Furinture Name</th>
+                <th scope="col">Number of Pieces</th>
               </tr>
             </thead>
-
+  
             <tbody>
-              ${totalEstimateRows}
-              <tr>
-                <th scope="row"></th>
-                <th>Estimate Total Sqft:</th>
-                <th colspan="4">${calculateEstimateTotalSqft(room)}</th>
-              </tr>
-              <tr>
-                <th scope="row"></th>
-                <th>Estimate Total Cost:</th>
-                <th colspan="4">$${calculateEstimateTotalPrice(room)}</th>
-              </tr>
+              ${furnitureRows}
             </tbody>
-          </table>
+        </table>
       `
       );
-    }
-  }
-}
+    };
+
+    displayEstimateTotal.innerHTML = "";
+    displayEstimateTotal.insertAdjacentHTML(
+      "beforeend",
+      `
+        <h3>Estimate Total</h3>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Room</th>
+              <th scope="col">Room Sqft</th>
+              <th scope="col">Price per Sqft</th>
+              <th scope="col" colspan="2">Room Cost</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            ${totalEstimateRows}
+            <tr>
+              <th scope="row"></th>
+              <th>Estimate Total Sqft:</th>
+              <th colspan="4">${calculateEstimateTotalSqft(room)}</th>
+            </tr>
+            <tr>
+              <th scope="row"></th>
+              <th>Estimate Total Cost:</th>
+              <th colspan="4">$${calculateEstimateTotalPrice(room)}</th>
+            </tr>
+          </tbody>
+        </table>
+    `
+    );
+  };
+};
