@@ -11,10 +11,8 @@ var rooms = [
 console.log(rooms);
 
 const roomsDiv = document.querySelector("#rooms-div");
-const roomNameInput = document.querySelector("#room-name-input");
 const displayEstimateTotal = document.querySelector("#esitmate-totals");
 const emptyInputAlert = document.querySelector("#empty-input-alert");
-const ratePerSqftInput = document.querySelector("#rate-per-sqft-input");
 const displayRatePerSqft = document.querySelector("#display-rate-per-sqft");
 
 // when called displays current values of all rooms and totals sections
@@ -54,8 +52,6 @@ function renderRooms() {
         cabinetRows = cabinetRow + "\n";
     };
 
-    
-
     let rows = "";
     for (let j = 0; j < room.items.length; j++) {
       const item = room.items[j];
@@ -91,8 +87,6 @@ function renderRooms() {
           furnitureRows = furnitureRows + furnitureRow + "\n";
       };
     };
-    
-    
 
     roomsDiv.insertAdjacentHTML(
       "beforeend",
@@ -334,7 +328,7 @@ function renderRooms() {
     displayEstimateTotal.insertAdjacentHTML(
       "beforeend",
       `
-        <h3>Estimate Total</h3>
+        <h2>Estimate Total's</h2>
 
         <table class="table">
           <thead>

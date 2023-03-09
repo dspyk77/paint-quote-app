@@ -1,3 +1,6 @@
+const ratePerSqftInput = document.querySelector("#rate-per-sqft-input");
+const roomNameInput = document.querySelector("#room-name-input");
+
 // when clicking the labor rate input field the inherit set value is cleared
 ratePerSqftInput.addEventListener("focus", (event) => {
   event.target.value = "";
